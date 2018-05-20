@@ -48,7 +48,7 @@ SPI_HandleTypeDef *pSpi = 0;
 
 /**
   * @brief  This function initalize the SPI handle.
-	* @param	hspi : already initalized handle to SPI HW
+    * @param    hspi : already initalized handle to SPI HW
   * @retval none :
   */
 void SpiInit(SPI_HandleTypeDef *hspi)
@@ -58,9 +58,9 @@ void SpiInit(SPI_HandleTypeDef *hspi)
 
 /**
   * @brief  This function Transmit and Reveice data via SPI
-	* @param	txData : pointer to data that shall be transmitted
-	* @param	rxData : pointer to data holding the buffer where received data shall be copied to.
-	* @param	length : length of data to transmit
+    * @param    txData : pointer to data that shall be transmitted
+    * @param    rxData : pointer to data holding the buffer where received data shall be copied to.
+    * @param    length : length of data to transmit
   * @retval ERR_INVALID_HANDLE : in case the SPI HW is not initalized yet
   * @retval others : see HAL error codes
   */

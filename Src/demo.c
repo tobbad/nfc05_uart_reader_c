@@ -70,15 +70,15 @@
 */
 
 /* Definition of possible states the demo state machine could have */
-#define DEMO_ST_FIELD_OFF			        0
+#define DEMO_ST_FIELD_OFF                   0
 #define DEMO_ST_POLL_ACTIVE_TECH      1
 #define DEMO_ST_POLL_PASSIV_TECH      2
-#define DEMO_ST_WAIT_WAKEUP	          3
+#define DEMO_ST_WAIT_WAKEUP           3
 
 #define DEMO_BUF_LEN                  255
 
 /* macro to cycle through states */
-#define	NEXT_STATE()		             {state++; state %= sizeof(stateArray);}
+#define NEXT_STATE()                     {state++; state %= sizeof(stateArray);}
 
 
 
@@ -181,12 +181,12 @@ void demoCycle( void )
   /* Check if USER button is pressed */
   if( platformGpioIsLow(PLATFORM_USER_BUTTON_PORT, PLATFORM_USER_BUTTON_PIN))
   {
-			doWakeUp = !doWakeUp;             /* enable/disable wakeup */
-			state = DEMO_ST_FIELD_OFF;        /* restart loop          */
+            doWakeUp = !doWakeUp;             /* enable/disable wakeup */
+            state = DEMO_ST_FIELD_OFF;        /* restart loop          */
     
-			/* Debounce button */
-			while( platformGpioIsLow(PLATFORM_USER_BUTTON_PORT, PLATFORM_USER_BUTTON_PIN) );
-	}
+            /* Debounce button */
+            while( platformGpioIsLow(PLATFORM_USER_BUTTON_PORT, PLATFORM_USER_BUTTON_PIN) );
+    }
   
   switch( stateArray[state] )
   {

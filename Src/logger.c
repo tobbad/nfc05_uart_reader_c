@@ -65,7 +65,7 @@ uint8_t logUsartTx(uint8_t *data, uint16_t dataLen);
 
 /**
   * @brief  This function initalize the UART handle.
-	* @param	husart : already initalized handle to USART HW
+    * @param    husart : already initalized handle to USART HW
   * @retval none :
   */
 void logUsartInit(UART_HandleTypeDef *husart)
@@ -75,8 +75,8 @@ void logUsartInit(UART_HandleTypeDef *husart)
 
 /**
   * @brief  This function Transmit data via USART
-	* @param	data : data to be transmitted
-	* @param	dataLen : length of data to be transmitted
+    * @param    data : data to be transmitted
+    * @param    dataLen : length of data to be transmitted
   * @retval ERR_INVALID_HANDLE : in case the SPI HW is not initalized yet
   * @retval others : HAL status
   */

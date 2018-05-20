@@ -106,7 +106,7 @@
 #define PLATFORM_USER_BUTTON_PIN     B1_Pin                /*!< GPIO pin user button       */
 #define PLATFORM_USER_BUTTON_PORT    B1_GPIO_Port          /*!< GPIO port user button      */
 
-
+#define USE_LOGGER LOGGER_ON
 /*
 ******************************************************************************
 * GLOBAL MACROS

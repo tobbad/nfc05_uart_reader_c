@@ -47,7 +47,7 @@ UART_HandleTypeDef *pUsart = 0;
 
 /**
   * @brief  This function initalize the UART handle.
-	* @param	husart : already initalized handle to USART HW
+    * @param    husart : already initalized handle to USART HW
   * @retval none :
   */
 void UsartInit(UART_HandleTypeDef *husart)
@@ -57,7 +57,7 @@ void UsartInit(UART_HandleTypeDef *husart)
 
 /**
   * @brief  This function Transmit one data byte via USART
-	* @param	data : data to be transmitted
+    * @param    data : data to be transmitted
   * @retval ERR_INVALID_HANDLE : in case the SPI HW is not initalized yet
   * @retval others : HAL status
   */
@@ -71,8 +71,8 @@ uint8_t UsartTxByte(uint8_t data)
 
 /**
   * @brief  This function Transmit data via USART
-	* @param	data : data to be transmitted
-	* @param	dataLen : length of data to be transmitted
+    * @param    data : data to be transmitted
+    * @param    dataLen : length of data to be transmitted
   * @retval ERR_INVALID_HANDLE : in case the SPI HW is not initalized yet
   * @retval others : HAL status
   */
@@ -86,8 +86,8 @@ uint8_t UsartTx(uint8_t *data, uint16_t dataLen)
 
 /**
   * @brief  This function Receive data via USART
-	* @param	data : data where received data shall be stored
-	* @param	dataLen : length of received data
+    * @param    data : data where received data shall be stored
+    * @param    dataLen : length of received data
   * @retval ERR_INVALID_HANDLE : in case the SPI HW is not initalized yet
   * @retval others : HAL status
   */

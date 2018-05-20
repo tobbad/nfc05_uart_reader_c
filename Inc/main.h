@@ -53,6 +53,7 @@
 #define B1_GPIO_Port GPIOC
 #define IRQ_3911_Pin GPIO_PIN_0
 #define IRQ_3911_GPIO_Port GPIOA
+#define IRQ_3911_EXTI_IRQn EXTI0_IRQn
 #define LED_F_Pin GPIO_PIN_1
 #define LED_F_GPIO_Port GPIOA
 #define USART_TX_Pin GPIO_PIN_2
