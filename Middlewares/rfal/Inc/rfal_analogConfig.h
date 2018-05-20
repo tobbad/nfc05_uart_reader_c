@@ -10,8 +10,8 @@
   *
   *        http://www.st.com/myliberty
   *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
   * AND SPECIFICALLY DISCLAIMING THE IMPLIED WARRANTIES OF MERCHANTABILITY,
   * FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
@@ -31,8 +31,8 @@
  *  \author bkam
  *
  *  \brief RF Chip Analog Configuration Settings
- *  
- *  
+ *
+ *
  * @addtogroup RFAL
  * @{
  *
@@ -43,7 +43,7 @@
  * @addtogroup AnalogConfig
  * @brief RFAL Analog Config Module
  * @{
- * 
+ *
  */
 
 #ifndef RFAL_ANALOG_CONFIG_H
@@ -195,9 +195,9 @@ typedef struct {
 /*!
  *****************************************************************************
  * \brief Initialize the Analog Configuration
- * 
+ *
  * Reset the Analog Configuration LUT pointer to reference to default settings.
- * 
+ *
  *****************************************************************************
  */
 void rfalAnalogConfigInitialize( void );
@@ -206,25 +206,25 @@ void rfalAnalogConfigInitialize( void );
 /*!
  *****************************************************************************
  * \brief Indicate if the current Analog Configuration Table is complete and ready to be used.
- * 
+ *
  * \return true if current Analog Configuration Table is complete and ready to be used.
  * \return false if current Analog Configuration Table is incomplete
- * 
+ *
  *****************************************************************************
  */
 bool rfalAnalogConfigIsReady( void );
 
 /*!
  *****************************************************************************
- * \brief  Write the whole Analog Configuration table in raw format 
- *  
+ * \brief  Write the whole Analog Configuration table in raw format
+ *
  * Writes the Analog Configuration and Look Up Table with the given raw table
- * 
+ *
  * NOTE: Function does not check the validity of the given Table contents
- * 
+ *
  * \param[in]  configTbl:     location of config Table to be loaded
  * \param[in]  configTblSize: size of the config Table to be loaded
- * 
+ *
  * \return ERR_NONE    : if setting is updated
  * \return ERR_PARAM   : if configTbl is invalid
  * \return ERR_NOMEM   : if the given Table is bigger exceeds the max size
@@ -237,19 +237,19 @@ ReturnCode rfalAnalogConfigListWriteRaw( const uint8_t *configTbl, uint16_t conf
 /*!
  *****************************************************************************
  * \brief  Write the Analog Configuration table with new analog settings.
- *  
- * Writes the Analog Configuration and Look Up Table with the new list of register-mask-value 
+ *
+ * Writes the Analog Configuration and Look Up Table with the new list of register-mask-value
  * and Configuration ID respectively.
- * 
+ *
  * NOTE: Function does not check for the validity of the Register Address.
- * 
- * \param[in]  more: 0x00 indicates it is last Configuration ID settings; 
+ *
+ * \param[in]  more: 0x00 indicates it is last Configuration ID settings;
  *                   0x01 indicates more Configuration ID setting(s) are coming.
  * \param[in]  *config: reference to the configuration list of current Configuraiton ID.
- *                          
+ *
  * \return ERR_PARAM   : if Configuration ID or parameter is invalid
- * \return ERR_NOMEM   : if LUT is full      
- * \return ERR_REQUEST : if the update Configuration Id is disabled               
+ * \return ERR_NOMEM   : if LUT is full
+ * \return ERR_REQUEST : if the update Configuration Id is disabled
  * \return ERR_NONE    : if setting is updated
  *
  *****************************************************************************
@@ -259,17 +259,17 @@ ReturnCode rfalAnalogConfigListWrite( uint8_t more, rfalAnalogConfig *config );
 /*!
  *****************************************************************************
  * \brief  Read the whole Analog Configuration table in raw format
- *  
+ *
  * Reads the whole Analog Configuration Table in raw format
- * 
- * \param[out]   tblBuf: location to the buffer to place the Config Table 
+ *
+ * \param[out]   tblBuf: location to the buffer to place the Config Table
  * \param[in]    tblBufLen: length of the buffer to place the Config Table
- * \param[out]   configTblSize: Config Table size 
- *                          
+ * \param[out]   configTblSize: Config Table size
+ *
  * \return ERR_PARAM : if configTbl or configTblSize is invalid
- * \return ERR_NOMEM : if configTblSize is not enough for the whole table           
+ * \return ERR_NOMEM : if configTblSize is not enough for the whole table
  * \return ERR_NONE  : if read is successful
- * 
+ *
  *****************************************************************************
  */
 ReturnCode rfalAnalogConfigListReadRaw( uint8_t *tblBuf, uint16_t tblBufLen, uint16_t *configTblSize );
@@ -277,18 +277,18 @@ ReturnCode rfalAnalogConfigListReadRaw( uint8_t *tblBuf, uint16_t tblBufLen, uin
 /*!
  *****************************************************************************
  * \brief  Read the Analog Configuration table.
- *  
+ *
  * Read the Analog Configuration Table
- * 
- * \param[in]     configOffset: offset to the next Configuration ID in the List Table to be read.   
- * \param[out]    more: 0x00 indicates it is last Configuration ID settings; 
+ *
+ * \param[in]     configOffset: offset to the next Configuration ID in the List Table to be read.
+ * \param[out]    more: 0x00 indicates it is last Configuration ID settings;
  *                      0x01 indicates more Configuration ID setting(s) are coming.
  * \param[out]    config: configuration id, number of configuration sets and register-mask-value sets
  * \param[in]     numConfig: the remaining configuration settings space available;
- *                          
- * \return ERR_NOMEM : if number of Configuration for respective Configuration ID is greater the the remaining configuration setting space available                
+ *
+ * \return ERR_NOMEM : if number of Configuration for respective Configuration ID is greater the the remaining configuration setting space available
  * \return ERR_NONE  : if read is successful
- * 
+ *
  *****************************************************************************
  */
 ReturnCode rfalAnalogConfigListRead( rfalAnalogConfigOffset *configOffset, uint8_t *more, rfalAnalogConfig *config, rfalAnalogConfigNum numConfig );
@@ -296,13 +296,13 @@ ReturnCode rfalAnalogConfigListRead( rfalAnalogConfigOffset *configOffset, uint8
 /*!
  *****************************************************************************
  * \brief  Set the Analog settings of indicated Configuration ID.
- *  
+ *
  * Update the chip with indicated analog settings of indicated Configuration ID.
  *
  * \param[in]  configId: configuration ID
- *                            
+ *
  * \return ERR_PARAM if Configuration ID is invalid
- * \return ERR_INTERNAL if error updating setting to chip                   
+ * \return ERR_INTERNAL if error updating setting to chip
  * \return ERR_NONE if new settings is applied to chip
  *
  *****************************************************************************

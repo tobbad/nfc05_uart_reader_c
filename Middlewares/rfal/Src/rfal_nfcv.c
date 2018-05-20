@@ -272,10 +272,10 @@ ReturnCode rfalNfcvPollerCollisionResolution( uint8_t devLimit, rfalNfcvListenDe
     uint16_t          rcvdLen;
     uint8_t           colIt;
     uint8_t           colCnt;
-   /* bool              colPending; */
+    bool              colPending;
     rfalNfcvCollision colFound[RFAL_NFCV_MAX_COLL_SUPPORTED];
 
-   /* NO_WARNING(colPending); */
+    NO_WARNING(colPending);
 
     if( (nfcvDevList == NULL) || (devCnt == NULL) )
     {
@@ -286,7 +286,7 @@ ReturnCode rfalNfcvPollerCollisionResolution( uint8_t devLimit, rfalNfcvListenDe
     *devCnt = 0;
     colIt         = 0;
     colCnt        = 0;
-   /* colPending    = false; */
+    colPending    = false;
     ST_MEMSET(nfcvDevList, 0x00, (sizeof(rfalNfcvListenDevice)*devLimit) );
     ST_MEMSET(colFound, 0x00, (sizeof(rfalNfcvCollision)*RFAL_NFCV_MAX_COLL_SUPPORTED) );
 
@@ -305,7 +305,7 @@ ReturnCode rfalNfcvPollerCollisionResolution( uint8_t devLimit, rfalNfcvListenDe
     }
 
     /* A Collision has been identified  Activity 2.0  9.3.7.2  (Symbol 3) */
-   /* colPending = true; */
+    colPending = true;
 
     /* Check if the Collision Resolution is set to perform only Collision detection   Activity 2.0  9.3.7.5 (Symbol 4)*/
     if( devLimit == 0 )
@@ -323,7 +323,7 @@ ReturnCode rfalNfcvPollerCollisionResolution( uint8_t devLimit, rfalNfcvListenDe
     {
         /* Activity 2.0  9.3.7.5  (Symbol 6) */
         slotNum    = 0;
-       /* colPending = false; */
+        colPending = false;
 
 
         /* Send INVENTORY_REQ with 16 slots   Activity 2.0  9.3.7.7  (Symbol 8) */
@@ -353,7 +353,7 @@ ReturnCode rfalNfcvPollerCollisionResolution( uint8_t devLimit, rfalNfcvListenDe
                 else if(ret == ERR_RF_COLLISION)
                 {
                     /* Activity 2.0  9.3.7.15  (Symbol 16) */
-                  /* colPending = true; */
+                    colPending = true;
 
                     /* Ensure that the frame received has at least the FLAGS + DSFI */
                     if( rcvdLen <= rfalConvBytesToBits( RFAL_NFCV_FLAG_LEN + RFAL_NFCV_DSFI_LEN ) )

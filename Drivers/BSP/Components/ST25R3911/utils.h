@@ -10,8 +10,8 @@
   *
   *        http://www.st.com/myliberty
   *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
   * AND SPECIFICALLY DISCLAIMING THE IMPLIED WARRANTIES OF MERCHANTABILITY,
   * FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
@@ -50,14 +50,14 @@
 * GLOBAL MACROS
 ******************************************************************************
 */
-/*! 
+/*!
  * this macro evaluates an error variable \a ERR against an error code \a EC.
  * in case it is not equal it jumps to the given label \a LABEL.
  */
 #define EVAL_ERR_NE_GOTO(EC, ERR, LABEL)                                   \
     if (EC != ERR) goto LABEL;
 
-/*! 
+/*!
  * this macro evaluates an error variable \a ERR against an error code \a EC.
  * in case it is equal it jumps to the given label \a LABEL.
  */

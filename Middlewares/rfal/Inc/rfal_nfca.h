@@ -10,8 +10,8 @@
   *
   *        http://www.st.com/myliberty
   *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
   * AND SPECIFICALLY DISCLAIMING THE IMPLIED WARRANTIES OF MERCHANTABILITY,
   * FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
@@ -31,18 +31,18 @@
  *  \author Gustavo Patricio
  *
  *  \brief Provides several NFC-A convenience methods and definitions
- *  
- *  It provides a Poller (ISO14443A PCD) interface and as well as 
+ *
+ *  It provides a Poller (ISO14443A PCD) interface and as well as
  *  some NFC-A Listener (ISO14443A PICC) helpers.
  *
  *  The definitions and helpers methods provided by this module are only
  *  up to ISO14443-3 layer
- *  
- *  
+ *
+ *
  *  An usage example is provided here: \ref exampleRfalNfca.c
  *  \example exampleRfalNfca.c
- *  
- *  
+ *
+ *
  * @addtogroup RFAL
  * @{
  *
@@ -53,7 +53,7 @@
  * @addtogroup NFC-A
  * @brief RFAL NFC-A Module
  * @{
- * 
+ *
  */
 
 
@@ -137,7 +137,7 @@ typedef enum {
 
 /*! SENS_RES (ATQA) format  Digital 1.1  6.6.3 & Table 7 */
 typedef struct
-{ 
+{
     uint8_t      anticollisionInfo;                               /*!< SENS_RES Anticollision Information                        */
     uint8_t      platformInfo;                                    /*!< SENS_RES Platform Information                             */
 } rfalNfcaSensRes;
@@ -196,14 +196,14 @@ typedef struct
 ******************************************************************************
 */
 
-/*! 
+/*!
  *****************************************************************************
  * \brief  Initialize NFC-A Poller mode
- *  
- * This methods configures RFAL RF layer to perform as a 
+ *
+ * This methods configures RFAL RF layer to perform as a
  * NFC-A Poller/RW (ISO14443A PCD) including all default timings and bit rate
  * to 106 kbps
- 
+
  *
  * \return ERR_WRONG_STATE  : RFAL not initialized or mode not set
  * \return ERR_NONE         : No error
@@ -212,19 +212,19 @@ typedef struct
 ReturnCode rfalNfcaPollerInitialize( void );
 
 
-/*! 
+/*!
  *****************************************************************************
  * \brief  NFC-A Poller Check Presence
- *  
+ *
  * This method checks if a NFC-A Listen device (PICC) is present on the field
  * by sending an ALL_REQ (WUPA) or SENS_REQ (REQA)
- *  
+ *
  * \param[in]  cmd     : Indicate if to send an ALL_REQ or a SENS_REQ
  * \param[out] sensRes : If received, the SENS_RES
  *
  * \return ERR_WRONG_STATE  : RFAL not initialized or incorrect mode
  * \return ERR_PARAM        : Invalid parameters
- * \return ERR_IO           : Generic internal error 
+ * \return ERR_IO           : Generic internal error
  * \return ERR_RF_COLLISION : Collision detected one or more device in the field
  * \return ERR_PAR          : Parity error detected, one or more device in the field
  * \return ERR_CRC          : CRC error detected, one or more device in the field
@@ -237,14 +237,14 @@ ReturnCode rfalNfcaPollerInitialize( void );
 ReturnCode rfalNfcaPollerCheckPresence( rfal14443AShortFrameCmd cmd, rfalNfcaSensRes *sensRes );
 
 
-/*! 
+/*!
  *****************************************************************************
  * \brief  NFC-A Poller Select
- *  
- * This method selects a NFC-A Listener device (PICC) 
- *  
+ *
+ * This method selects a NFC-A Listener device (PICC)
+ *
  * \param[in]  nfcid1   : Listener device NFCID1 to be selected
- * \param[in]  nfcidLen : Length of the NFCID1 to be selected  
+ * \param[in]  nfcidLen : Length of the NFCID1 to be selected
  * \param[out] selRes   : pointer to place the SEL_RES
  *
  * \return ERR_WRONG_STATE  : RFAL not initialized or incorrect mode
@@ -261,13 +261,13 @@ ReturnCode rfalNfcaPollerCheckPresence( rfal14443AShortFrameCmd cmd, rfalNfcaSen
 ReturnCode rfalNfcaPollerSelect( uint8_t *nfcid1, uint8_t nfcidLen, rfalNfcaSelRes *selRes );
 
 
-/*! 
+/*!
  *****************************************************************************
  * \brief  NFC-A Poller Sleep
- *  
+ *
  * This method sends a SLP_REQ (HLTA)
- * No response is expected afterwards   Digital 1.1  6.9.2.1 
- *  
+ * No response is expected afterwards   Digital 1.1  6.9.2.1
+ *
  * \return ERR_WRONG_STATE  : RFAL not initialized or incorrect mode
  * \return ERR_PARAM        : Invalid parameters
  * \return ERR_IO           : Generic internal error
@@ -280,17 +280,17 @@ ReturnCode rfalNfcaPollerSleep( void );
 /*!
  *****************************************************************************
  * \brief  NFC-A Technology Detection
- *  
+ *
  * This method performs NFC-A Technology Detection as defined in the spec
  * given in the compliance mode
- *  
+ *
  * \param[in]  compMode  : compliance mode to be performed
  * \param[out] sensRes   : location to store the SENS_RES, if received
- * 
- * When compMode is set to ISO compliance a SLP_REQ (HLTA) is not sent 
- * after detection. When set to EMV a ALL_REQ (WUPA) is sent instead of 
+ *
+ * When compMode is set to ISO compliance a SLP_REQ (HLTA) is not sent
+ * after detection. When set to EMV a ALL_REQ (WUPA) is sent instead of
  * a SENS_REQ (REQA)
- *  
+ *
  * \return ERR_WRONG_STATE  : RFAL not initialized or incorrect mode
  * \return ERR_PARAM        : Invalid parameters
  * \return ERR_IO           : Generic internal error
@@ -300,18 +300,18 @@ ReturnCode rfalNfcaPollerSleep( void );
 ReturnCode rfalNfcaPollerTechnologyDetection( rfalComplianceMode compMode, rfalNfcaSensRes *sensRes );
 
 
-/*! 
+/*!
  *****************************************************************************
  * \brief  NFC-A Poller Collision Resolution
- *  
- * Collision resolution for one NFC-A Listener device/card (PICC) as 
+ *
+ * Collision resolution for one NFC-A Listener device/card (PICC) as
  * defined in Activity 1.1  9.3.4
- * 
+ *
  * This method executes anti collision loop and select the device with higher NFCID1
- * 
- * When devLimit = 0 it is configured to perform collision detection only. Once a collision 
+ *
+ * When devLimit = 0 it is configured to perform collision detection only. Once a collision
  * is detected the collision resolution is aborted immidiatly. If only one device is found
- * with no collisions, it will properly resolved. 
+ * with no collisions, it will properly resolved.
  *
  * \param[in]  devLimit    : device limit value (CON_DEVICES_LIMIT)
  * \param[out] collPending : pointer to collision pending flag (INT_COLL_PEND)
@@ -330,10 +330,10 @@ ReturnCode rfalNfcaPollerTechnologyDetection( rfalComplianceMode compMode, rfalN
 ReturnCode rfalNfcaPollerSingleCollisionResolution( uint8_t devLimit, bool *collPending, rfalNfcaSelRes *selRes, uint8_t *nfcId1, uint8_t *nfcId1Len );
 
 
-/*! 
+/*!
  *****************************************************************************
  * \brief  NFC-A Poller Full Collision Resolution
- *  
+ *
  * Performs a full Collision resolution as defined in Activity 1.0 or 1.1  9.3.4
  *
  * \param[in]  compMode    : compliance mode to be performed
@@ -343,16 +343,16 @@ ReturnCode rfalNfcaPollerSingleCollisionResolution( uint8_t devLimit, bool *coll
  *
  * When compMode is set to ISO compliance it assumes that the device is
  * not sleeping and therefore no ALL_REQ (WUPA) is sent at the beginning.
- * 
- * When compMode is set to NFC compliance an additional ALL_REQ (WUPA) is sent at 
+ *
+ * When compMode is set to NFC compliance an additional ALL_REQ (WUPA) is sent at
  * the beginning and a proprietary behaviour also takes place. Once a device has been
  * resolved an additional SLP_REQ (HLTA) is sent regardless if there was a collision
  * (except if the number of devices found already equals the limit).
  * This proprietary behaviour ensures proper activation of certain devices that suffer
  * from influence of Type B commands as foreseen in ISO14443-3 5.2.3
- *  
- *  
- * When devLimit = 0 it is configured to perform collision detection only. Once a collision 
+ *
+ *
+ * When devLimit = 0 it is configured to perform collision detection only. Once a collision
  * is detected the collision resolution is aborted immidiatly. If only one device is found
  * with no collisions, it will properly resolved.
  *
@@ -368,13 +368,13 @@ ReturnCode rfalNfcaPollerFullCollisionResolution( rfalComplianceMode compMode, u
 
 /*!
  *****************************************************************************
- * \brief NFC-A Listener is SLP_REQ 
- * 
+ * \brief NFC-A Listener is SLP_REQ
+ *
  * Checks if the given buffer contains valid NFC-A SLP_REQ (HALT)
- * 
+ *
  * \param[in] buf: buffer containing data
  * \param[in] bufLen: length of the data in buffer to be checked
- * 
+ *
  * \return true if data in buf contains a SLP_REQ ; false otherwise
  *****************************************************************************
  */

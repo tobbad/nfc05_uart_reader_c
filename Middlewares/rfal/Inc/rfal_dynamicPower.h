@@ -10,8 +10,8 @@
   *
   *        http://www.st.com/myliberty
   *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
   * AND SPECIFICALLY DISCLAIMING THE IMPLIED WARRANTIES OF MERCHANTABILITY,
   * FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
@@ -31,10 +31,10 @@
  *  \author Martin Zechleitner
  *
  *  \brief Dynamic Power adjustment
- *  
- *  This module provides an interface to perform the power adjustment dynamically 
- *  
- *  
+ *
+ *  This module provides an interface to perform the power adjustment dynamically
+ *
+ *
  * @addtogroup RFAL
  * @{
  *
@@ -45,7 +45,7 @@
  * @addtogroup DynamicPower
  * @brief RFAL Dynamic Power Module
  * @{
- * 
+ *
  */
 
 
@@ -77,7 +77,7 @@
 
 typedef struct {
     uint8_t rfoRes; /*!< Setting for the resistance level of the RFO */
-    uint8_t inc;    /*!< Threshold for incrementing the output power */ 
+    uint8_t inc;    /*!< Threshold for incrementing the output power */
     uint8_t dec;    /*!< Threshold for decrementing the output power */
 }rfalDynamicPowerEntry;
 
@@ -88,27 +88,27 @@ typedef struct {
 */
 
 
-/*! 
+/*!
  *****************************************************************************
  * \brief  Initialize dynamic power table
- *  
- *  This function sets the internal dynamic power table to the default 
+ *
+ *  This function sets the internal dynamic power table to the default
  *  values stored in rfal_dynamicPowerTbl.h
- *  
+ *
  *****************************************************************************
  */
 void rfalDynamicPowerInitialize( void );
 
 
-/*! 
+/*!
  *****************************************************************************
  * \brief  Dynamic power table Load
- *  
- * Load the dynamic power table  
+ *
+ * Load the dynamic power table
  *
  * \param[in]  powerTbl:     location of power Table to be loaded
  * \param[in]  powerTblEntries: number of entries of the power Table to be loaded
- * 
+ *
  * \return ERR_NONE    : No error
  * \return ERR_PARAM   : if configTbl is invalid
  * \return ERR_NOMEM   : if the given Table is bigger exceeds the max size
@@ -116,49 +116,49 @@ void rfalDynamicPowerInitialize( void );
  */
 ReturnCode rfalDynamicPowerTableLoad( rfalDynamicPowerEntry* powerTbl, uint8_t powerTblEntries );
 
-/*! 
+/*!
  *****************************************************************************
  * \brief  Dynamic power table Read
- *  
- * Read the dynamic power table  
  *
- * \param[out]   tblBuf: location to the rfalDynamicPowerEntry[] to place the Table 
+ * Read the dynamic power table
+ *
+ * \param[out]   tblBuf: location to the rfalDynamicPowerEntry[] to place the Table
  * \param[in]    tblBufEntries: number of entries available in tblBuf to place the power Table
  * \param[out]   tableEntries: returned number of entries actually written into tblBuf
- * 
+ *
  * \return ERR_NONE    : No error
  * \return ERR_PARAM   : if configTbl is invalid or parameters are invalid
  *****************************************************************************
  */
 ReturnCode rfalDynamicPowerTableRead( rfalDynamicPowerEntry* tblBuf, uint8_t tblBufEntries, uint8_t* tableEntries );
 
-/*! 
+/*!
  *****************************************************************************
  * \brief  Dynamic power adjust
- *  
- * It measures the current output and adjusts the power accordingly to 
- * the dynamic power table  
- * 
+ *
+ * It measures the current output and adjusts the power accordingly to
+ * the dynamic power table
+ *
  *****************************************************************************
  */
 void rfalDynamicPowerAdjust( void );
 
-/*! 
+/*!
  *****************************************************************************
  * \brief  Dynamic power Enable
- *  
- * Enables the Dynamic power adjustment 
- * 
+ *
+ * Enables the Dynamic power adjustment
+ *
  *****************************************************************************
  */
 void rfalDynamicPowerEnable( void );
 
-/*! 
+/*!
  *****************************************************************************
  * \brief  Dynamic power Disable
- *  
- * Disables the Dynamic power adjustment 
- * 
+ *
+ * Disables the Dynamic power adjustment
+ *
  *****************************************************************************
  */
 void rfalDynamicPowerDisable( void );

@@ -10,8 +10,8 @@
   *
   *        http://www.st.com/myliberty
   *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
   * AND SPECIFICALLY DISCLAIMING THE IMPLIED WARRANTIES OF MERCHANTABILITY,
   * FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
@@ -32,10 +32,10 @@
  *
  *  \brief Implementation of NFC-F Poller (FeliCa PCD) device
  *
- *  The definitions and helpers methods provided by this module are 
+ *  The definitions and helpers methods provided by this module are
  *  aligned with NFC-F (FeliCa - JIS X6319-4)
- *  
- *  
+ *
+ *
  * @addtogroup RFAL
  * @{
  *
@@ -45,8 +45,8 @@
  *
  * @addtogroup NFC-F
  * @brief RFAL NFC-F Module
- * @{  
- *  
+ * @{
+ *
  */
 
 
@@ -99,7 +99,7 @@
 
 
 /*! NFC-F Felica command set   JIS X6319-4  9.1 */
-enum 
+enum
 {
     RFAL_NFCF_CMD_POLLING                  = 0x00, /*!< SENSF_REQ (Felica Poll/REQC command to identify a card )       */
     RFAL_NFCF_CMD_POLLING_RES              = 0x01, /*!< SENSF_RES (Felica Poll/REQC command response )                 */
@@ -133,7 +133,7 @@ enum
 
 
 /*! NFC-F SENSF_RES format  Digital 1.1  8.6.2 */
-typedef struct 
+typedef struct
 {
     uint8_t CMD;                                /*!< Command Code: 01h  */
     uint8_t NFCID2[RFAL_NFCF_NFCID2_LEN];       /*!< NFCID2             */
@@ -166,13 +166,13 @@ typedef struct
 ******************************************************************************
 */
 
-/*! 
+/*!
  *****************************************************************************
  * \brief  Initialize NFC-F Poller mode
- *  
- * This methods configures RFAL RF layer to perform as a 
+ *
+ * This methods configures RFAL RF layer to perform as a
  * NFC-F Poller/RW (FeliCa PCD) including all default timings
- * 
+ *
  * \param[in]  bitRate      : NFC-F bitrate to be initialize (212 or 424)
  *
  * \return ERR_WRONG_STATE  : RFAL not initialized or mode not set
@@ -183,16 +183,16 @@ typedef struct
 ReturnCode rfalNfcfPollerInitialize( rfalBitRate bitRate );
 
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief NFC-F Poller Check Presence
- *  
+ *
  *  This function sends a Poll/SENSF command according to NFC Activity spec
  *  It detects if a NCF-F device is within range
- * 
+ *
  * \return ERR_WRONG_STATE  : RFAL not initialized or incorrect mode
  * \return ERR_PARAM        : Invalid parameters
- * \return ERR_IO           : Generic internal error 
+ * \return ERR_IO           : Generic internal error
  * \return ERR_CRC          : CRC error detected
  * \return ERR_FRAMING      : Framing error detected
  * \return ERR_PROTO        : Protocol error detected
@@ -204,15 +204,15 @@ ReturnCode rfalNfcfPollerInitialize( rfalBitRate bitRate );
 ReturnCode rfalNfcfPollerCheckPresence( void );
 
 
-/*! 
+/*!
  *****************************************************************************
  * \brief NFC-F Poller Poll
- * 
+ *
  * This function sends to all PICCs in field the POLL command with the given
  * number of slots.
  *
  * \param[in]  slots      : the number of slots to be performed
- * \param[in]  sysCode    : as given in FeliCa poll command  
+ * \param[in]  sysCode    : as given in FeliCa poll command
  * \param[in]  reqCode    : FeliCa communication parameters
  * \param[out] cardList   : Parameter of type rfalFeliCaPollRes which will hold the cards found
  * \param[out] devCnt     : actual number of cards found
@@ -222,7 +222,7 @@ ReturnCode rfalNfcfPollerCheckPresence( void );
  *
  * \return ERR_WRONG_STATE  : RFAL not initialized or incorrect mode
  * \return ERR_PARAM        : Invalid parameters
- * \return ERR_IO           : Generic internal error 
+ * \return ERR_IO           : Generic internal error
  * \return ERR_CRC          : CRC error detected
  * \return ERR_FRAMING      : Framing error detected
  * \return ERR_PROTO        : Protocol error detected
@@ -234,10 +234,10 @@ ReturnCode rfalNfcfPollerCheckPresence( void );
 ReturnCode rfalNfcfPollerPoll( rfalFeliCaPollSlots slots, uint16_t sysCode, uint8_t reqCode, rfalFeliCaPollRes *cardList, uint8_t *devCnt, uint8_t *collisions );
 
 
-/*! 
+/*!
  *****************************************************************************
  * \brief  NFC-F Poller Full Collision Resolution
- *  
+ *
  * Performs a full Collision resolution as defined in Activity 1.1  9.3.4
  *
  * \param[in]  compMode    : compliance mode to be performed
@@ -256,20 +256,20 @@ ReturnCode rfalNfcfPollerCollisionResolution( rfalComplianceMode compMode, uint8
 
 /*!
  *****************************************************************************
- * \brief NFC-F Listener is T3T Request  
- * 
- * This method checks if the given data is a valid T3T command (Read or Write) 
+ * \brief NFC-F Listener is T3T Request
+ *
+ * This method checks if the given data is a valid T3T command (Read or Write)
  * and in case a valid request has been received it may output the request's NFCID2
- * 
+ *
  * \param[in]   buf : buffer holding Initiator's received command
  * \param[in]   bufLen : length of received command in bytes
- * \param[out]  nfcid2 : pointer to where the NFCID2 may be outputed, 
+ * \param[out]  nfcid2 : pointer to where the NFCID2 may be outputed,
  *                       nfcid2 has NFCF_SENSF_NFCID2_LEN as length
- *                       Pass NULL if output parameter not desired 
- * 
+ *                       Pass NULL if output parameter not desired
+ *
  * \return true  : Valid T3T command (Read or Write) received
  * \return false : Invalid protocol request
- * 
+ *
  *****************************************************************************
  */
 bool rfalNfcfListenerIsT3TReq( uint8_t* buf, uint16_t bufLen, uint8_t* nfcid2 );

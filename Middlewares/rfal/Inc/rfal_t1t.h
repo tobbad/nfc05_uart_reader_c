@@ -10,8 +10,8 @@
   *
   *        http://www.st.com/myliberty
   *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
   * AND SPECIFICALLY DISCLAIMING THE IMPLIED WARRANTIES OF MERCHANTABILITY,
   * FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
@@ -31,11 +31,11 @@
  *  \author Gustavo Patricio
  *
  *  \brief Provides NFC-A T1T convenience methods and definitions
- *  
+ *
  *  This module provides an interface to perform as a NFC-A Reader/Writer
  *  to handle a Type 1 Tag T1T (Topaz)
- *  
- *  
+ *
+ *
  * @addtogroup RFAL
  * @{
  *
@@ -46,7 +46,7 @@
  * @addtogroup T1T
  * @brief RFAL T1T Module
  * @{
- *  
+ *
  */
 
 
@@ -107,12 +107,12 @@ typedef struct
 */
 
 
-/*! 
+/*!
  *****************************************************************************
  * \brief  Initialize NFC-A T1T Poller mode
- *  
- * This methods configures RFAL RF layer to perform as a 
- * NFC-A T1T Poller/RW (Topaz) including all default timings 
+ *
+ * This methods configures RFAL RF layer to perform as a
+ * NFC-A T1T Poller/RW (Topaz) including all default timings
  *
  * \return ERR_WRONG_STATE  : RFAL not initialized or mode not set
  * \return ERR_NONE         : No error
@@ -121,15 +121,15 @@ typedef struct
 ReturnCode rfalT1TPollerInitialize( void );
 
 
-/*! 
+/*!
  *****************************************************************************
  * \brief  NFC-A T1T Poller RID
- *  
- * This method reads the UID of a NFC-A T1T Listener device  
+ *
+ * This method reads the UID of a NFC-A T1T Listener device
  *
  *
  * \param[out]  ridRes : pointer to place the RID_RES
- * 
+ *
  * \return ERR_WRONG_STATE  : RFAL not initialized or mode not set
  * \return ERR_PARAM        : Invalid parameter
  * \return ERR_NONE         : No error
@@ -138,18 +138,18 @@ ReturnCode rfalT1TPollerInitialize( void );
 ReturnCode rfalT1TPollerRid( rfalT1TRidRes *ridRes );
 
 
-/*! 
+/*!
  *****************************************************************************
  * \brief  NFC-A T1T Poller RALL
- *  
- * This method send a Read All command to a NFC-A T1T Listener device  
+ *
+ * This method send a Read All command to a NFC-A T1T Listener device
  *
  *
  * \param[in]   uid       : the UID of the device to read data
  * \param[out]  rxBuf     : pointer to place the read data
  * \param[in]   rxBufLen  : size of rxBuf
  * \param[out]  rxRcvdLen : actual received data
- * 
+ *
  * \return ERR_WRONG_STATE  : RFAL not initialized or mode not set
  * \return ERR_PARAM        : Invalid parameter
  * \return ERR_NONE         : No error
@@ -158,17 +158,17 @@ ReturnCode rfalT1TPollerRid( rfalT1TRidRes *ridRes );
 ReturnCode rfalT1TPollerRall( uint8_t* uid, uint8_t* rxBuf, uint16_t rxBufLen, uint16_t *rxRcvdLen );
 
 
-/*! 
+/*!
  *****************************************************************************
  * \brief  NFC-A T1T Poller Write
- *  
- * This method writes the given data on the address of a NFC-A T1T Listener device  
+ *
+ * This method writes the given data on the address of a NFC-A T1T Listener device
  *
  *
  * \param[in]   uid       : the UID of the device to read data
  * \param[in]   address   : address to write the data
  * \param[in]   data      : the data to be written
- * 
+ *
  * \return ERR_WRONG_STATE  : RFAL not initialized or mode not set
  * \return ERR_PARAM        : Invalid parameter
  * \return ERR_NONE         : No error
