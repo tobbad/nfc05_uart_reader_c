@@ -10,8 +10,8 @@
   *
   *        http://www.st.com/myliberty
   *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
   * AND SPECIFICALLY DISCLAIMING THE IMPLIED WARRANTIES OF MERCHANTABILITY,
   * FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
@@ -30,7 +30,7 @@
  *
  *  \author Gustavo Patricio
  *
- *  \brief Implementation of ST25TB interface 
+ *  \brief Implementation of ST25TB interface
  *
  */
 
@@ -166,22 +166,22 @@ ReturnCode rfalSt25tbPollerCheckPresence( uint8_t *chipId )
     uint8_t    chipIdRes;
 
     chipIdRes = 0x00;
-   
+
     /* Send Initiate Request */
     ret = rfalSt25tbPollerInitiate( &chipIdRes );
-    
+
     /*  Check if a transmission error was detected */
     if( (ret == ERR_CRC) || (ret == ERR_FRAMING) )
     {
         return ERR_NONE;
     }
-    
+
     /* Copy chip ID if requested */
     if( chipId != NULL )
     {
         *chipId = chipIdRes;
     }
-    
+
     return ret;
 }
 
@@ -193,26 +193,26 @@ ReturnCode rfalSt25tbPollerInitiate( uint8_t *chipId )
     uint16_t              rxLen;
     rfalSt25tbInitiateReq initiateReq;
     uint8_t               rxBuf[RFAL_ST25TB_CHIP_ID_LEN + RFAL_ST25TB_CRC_LEN]; /* In case we receive less data that CRC, RF layer will not remove the CRC from buffer */
-    
+
     /* Compute Initiate Request */
     initiateReq.cmd1   = RFAL_ST25TB_INITIATE_CMD1;
     initiateReq.cmd2   = RFAL_ST25TB_INITIATE_CMD2;
-    
+
     /* Send Initiate Request */
     ret = rfalTransceiveBlockingTxRx( (uint8_t*)&initiateReq, sizeof(rfalSt25tbInitiateReq), (uint8_t*)rxBuf, sizeof(rxBuf), &rxLen, RFAL_TXRX_FLAGS_DEFAULT, RFAL_ST25TB_FWT );
-    
+
     /* Check for valid Select Response   */
     if( (ret == ERR_NONE) && (rxLen != RFAL_ST25TB_CHIP_ID_LEN) )
     {
         return ERR_PROTO;
     }
-    
+
     /* Copy chip ID if requested */
     if( chipId != NULL )
     {
         *chipId = *rxBuf;
     }
-    
+
     return ret;
 }
 
@@ -227,16 +227,16 @@ ReturnCode rfalSt25tbPollerPcall( uint8_t *chipId )
     /* Compute Pcal16 Request */
     pcallReq.cmd1   = RFAL_ST25TB_PCALL_CMD1;
     pcallReq.cmd2   = RFAL_ST25TB_PCALL_CMD2;
-    
+
     /* Send Pcal16 Request */
     ret = rfalTransceiveBlockingTxRx( (uint8_t*)&pcallReq, sizeof(rfalSt25tbPcallReq), (uint8_t*)chipId, RFAL_ST25TB_CHIP_ID_LEN, &rxLen, RFAL_TXRX_FLAGS_DEFAULT, RFAL_ST25TB_FWT );
-    
+
     /* Check for valid Select Response   */
     if( (ret == ERR_NONE) && (rxLen != RFAL_ST25TB_CHIP_ID_LEN) )
     {
         return ERR_PROTO;
     }
-    
+
     return ret;
 }
 
@@ -252,20 +252,20 @@ ReturnCode rfalSt25tbPollerSlotMarker( uint8_t slotNum, uint8_t *chipIdRes )
     {
         return ERR_PARAM;
     }
-    
+
     /* Compute SlotMarker */
     slotMarker = ( ((slotNum & RFAL_ST25TB_SLOTNUM_MASK) << RFAL_ST25TB_SLOTNUM_SHIFT) | RFAL_ST25TB_PCALL_CMD1 );
-    
-    
+
+
     /* Send SlotMarker */
     ret = rfalTransceiveBlockingTxRx( (uint8_t*)&slotMarker, RFAL_ST25TB_CMD_LEN, (uint8_t*)chipIdRes, RFAL_ST25TB_CHIP_ID_LEN, &rxLen, RFAL_TXRX_FLAGS_DEFAULT, RFAL_ST25TB_FWT );
-    
+
     /* Check for valid ChipID Response   */
     if( (ret == ERR_NONE) && (rxLen != RFAL_ST25TB_CHIP_ID_LEN) )
     {
         return ERR_PROTO;
     }
-    
+
     return ret;
 }
 
@@ -274,23 +274,23 @@ ReturnCode rfalSt25tbPollerSlotMarker( uint8_t slotNum, uint8_t *chipIdRes )
 ReturnCode rfalSt25tbPollerSelect( uint8_t chipId )
 {
     ReturnCode          ret;
-    uint16_t            rxLen;    
+    uint16_t            rxLen;
     rfalSt25tbSelectReq selectReq;
     uint8_t             chipIdRes;
 
     /* Compute Select Request */
     selectReq.cmd    = RFAL_ST25TB_SELECT_CMD;
     selectReq.chipId = chipId;
-    
+
     /* Send Select Request */
     ret = rfalTransceiveBlockingTxRx( (uint8_t*)&selectReq, sizeof(rfalSt25tbSelectReq), (uint8_t*)&chipIdRes, RFAL_ST25TB_CHIP_ID_LEN, &rxLen, RFAL_TXRX_FLAGS_DEFAULT, RFAL_ST25TB_FWT );
-    
+
     /* Check for valid Select Response   */
     if( (ret == ERR_NONE) && ((rxLen != RFAL_ST25TB_CHIP_ID_LEN) || (chipIdRes != chipId)) )
     {
         return ERR_PROTO;
     }
-    
+
     return ret;
 }
 
@@ -301,20 +301,20 @@ ReturnCode rfalSt25tbPollerGetUID( rfalSt25tbUID *UID )
     ReturnCode ret;
     uint16_t   rxLen;
     uint8_t    getUidReq;
-    
+
 
     /* Compute Get UID Request */
     getUidReq = RFAL_ST25TB_GET_UID_CMD;
-    
+
     /* Send Select Request */
     ret = rfalTransceiveBlockingTxRx( (uint8_t*)&getUidReq, RFAL_ST25TB_CMD_LEN, (uint8_t*)UID, sizeof(rfalSt25tbUID), &rxLen, RFAL_TXRX_FLAGS_DEFAULT, RFAL_ST25TB_FWT );
-    
+
     /* Check for valid UID Response */
     if( (ret == ERR_NONE) && (rxLen != RFAL_ST25TB_UID_LEN) )
     {
         return ERR_PROTO;
     }
-    
+
     return ret;
 }
 
@@ -326,14 +326,14 @@ ReturnCode rfalSt25tbPollerCollisionResolution( uint8_t devLimit, rfalSt25tbList
     uint8_t    chipId;
     ReturnCode ret;
     bool       detected;  /* collision or device was detected */
-    
+
     if( (st25tbDevList == NULL) || (devCnt == NULL) || (devLimit == 0) )
     {
         return ERR_PARAM;
     }
-    
+
     *devCnt = 0;
-    
+
     /* Step 1: Send Initiate */
     ret = rfalSt25tbPollerInitiate( &chipId );
     if( ret == ERR_NONE )
@@ -341,15 +341,15 @@ ReturnCode rfalSt25tbPollerCollisionResolution( uint8_t devLimit, rfalSt25tbList
         /* If only 1 answer is detected */
         st25tbDevList[*devCnt].chipID       = chipId;
         st25tbDevList[*devCnt].isDeselected = false;
-        
+
         /* Retrieve its UID and keep it Selected*/
         ret = rfalSt25tbPollerSelect( chipId );
-        
+
         if( ERR_NONE == ret )
         {
             ret = rfalSt25tbPollerGetUID( &st25tbDevList[*devCnt].UID );
         }
-        
+
         if( ERR_NONE == ret )
         {
             (*devCnt)++;
@@ -362,11 +362,11 @@ ReturnCode rfalSt25tbPollerCollisionResolution( uint8_t devLimit, rfalSt25tbList
         do
         {
             detected = false;
-            
+
             for(i = 0; i < RFAL_ST25TB_SLOTS; i++)
             {
                 platformDelay(1);  /* Wait t2: Answer to new request delay  */
-                
+
                 if( i==0 )
                 {
                     /* Step 2: Send Pcall16 */
@@ -377,13 +377,13 @@ ReturnCode rfalSt25tbPollerCollisionResolution( uint8_t devLimit, rfalSt25tbList
                     /* Step 3-17: Send Pcall16 */
                     ret = rfalSt25tbPollerSlotMarker( i, &chipId );
                 }
-                
+
                 if( ret == ERR_NONE )
                 {
                     /* Found another device */
                     st25tbDevList[*devCnt].chipID       = chipId;
                     st25tbDevList[*devCnt].isDeselected = false;
-                    
+
                     /* Select Device, retrieve its UID  */
                     ret = rfalSt25tbPollerSelect( chipId );
 
@@ -407,7 +407,7 @@ ReturnCode rfalSt25tbPollerCollisionResolution( uint8_t devLimit, rfalSt25tbList
                 {
                     detected = true;
                 }
-                
+
                 if( *devCnt >= devLimit )
                 {
                     break;
@@ -427,21 +427,21 @@ ReturnCode rfalSt25tbPollerReadBlock( uint8_t blockAddress, rfalSt25tbBlock *blo
     ReturnCode             ret;
     uint16_t               rxLen;
     rfalSt25tbReadBlockReq readBlockReq;
-    
+
 
     /* Compute Read Block Request */
     readBlockReq.cmd     = RFAL_ST25TB_READ_BLOCK_CMD;
     readBlockReq.address = blockAddress;
-    
+
     /* Send Read Block Request */
     ret = rfalTransceiveBlockingTxRx( (uint8_t*)&readBlockReq, sizeof(rfalSt25tbReadBlockReq), (uint8_t*)blockData, sizeof(rfalSt25tbBlock), &rxLen, RFAL_TXRX_FLAGS_DEFAULT, RFAL_ST25TB_FWT );
-    
+
     /* Check for valid UID Response */
     if( (ret == ERR_NONE) && (rxLen != RFAL_ST25TB_BLOCK_LEN) )
     {
         return ERR_PROTO;
     }
-    
+
     return ret;
 }
 
@@ -452,28 +452,28 @@ ReturnCode rfalSt25tbPollerWriteBlock( uint8_t blockAddress, rfalSt25tbBlock *bl
     ReturnCode              ret;
     uint16_t                rxLen;
     rfalSt25tbWriteBlockReq writeBlockReq;
-    rfalSt25tbBlock         tmpBlockData; 
-    
+    rfalSt25tbBlock         tmpBlockData;
+
 
     /* Compute Write Block Request */
     writeBlockReq.cmd     = RFAL_ST25TB_WRITE_BLOCK_CMD;
     writeBlockReq.address = blockAddress;
     ST_MEMCPY( writeBlockReq.data, blockData, RFAL_ST25TB_BLOCK_LEN );
-    
+
     /* Send Write Block Request */
     ret = rfalTransceiveBlockingTxRx( (uint8_t*)&writeBlockReq, sizeof(rfalSt25tbWriteBlockReq), tmpBlockData, RFAL_ST25TB_BLOCK_LEN, &rxLen, RFAL_TXRX_FLAGS_DEFAULT, (RFAL_ST25TB_FWT + RFAL_ST25TB_TW) );
-    
+
     /* Check if an unexpected answer was received */
     if( ret == ERR_NONE )
     {
-        return ERR_PROTO; 
+        return ERR_PROTO;
     }
     /* Check there was any error besides Timeout*/
     else if( ret != ERR_TIMEOUT )
     {
         return ret;
     }
-    
+
     ret = rfalSt25tbPollerReadBlock(blockAddress, &tmpBlockData);
     if( ret == ERR_NONE )
     {
@@ -494,7 +494,7 @@ ReturnCode rfalSt25tbPollerCompletion( void )
 
     /* Compute Completion Request */
     completionReq = RFAL_ST25TB_COMPLETION_CMD;
-    
+
     /* Send Completion Request, no response is expected */
     return rfalTransceiveBlockingTxRx( (uint8_t*)&completionReq, RFAL_ST25TB_CMD_LEN, NULL, 0, NULL, RFAL_TXRX_FLAGS_DEFAULT, RFAL_ST25TB_FWT );
 }
@@ -507,7 +507,7 @@ ReturnCode rfalSt25tbPollerResetToInventory( void )
 
     /* Compute Completion Request */
     resetInvReq = RFAL_ST25TB_RESET_INV_CMD;
-    
+
     /* Send Completion Request, no response is expected */
     return rfalTransceiveBlockingTxRx( (uint8_t*)&resetInvReq, RFAL_ST25TB_CMD_LEN, NULL, 0, NULL, RFAL_TXRX_FLAGS_DEFAULT, RFAL_ST25TB_FWT );
 }

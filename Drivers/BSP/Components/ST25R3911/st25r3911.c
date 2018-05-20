@@ -10,8 +10,8 @@
   *
   *        http://www.st.com/myliberty
   *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
   * AND SPECIFICALLY DISCLAIMING THE IMPLIED WARRANTIES OF MERCHANTABILITY,
   * FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
@@ -92,10 +92,10 @@ void st25r3911TxRxOff( void )
 void st25r3911OscOn( void )
 {
     uint8_t reg = 0;
-    
+
     /* Make sure that oscillator is turned on and stable */
     st25r3911ReadRegister( ST25R3911_REG_OP_CONTROL, &reg );
-    
+
     /* Use ST25R3911_REG_OP_CONTROL_en instead of ST25R3911_REG_AUX_DISPLAY_osc_ok to be on the safe side */
     if (!(ST25R3911_REG_OP_CONTROL_en & reg))
     {
@@ -109,7 +109,7 @@ void st25r3911OscOn( void )
         st25r3911WaitForInterruptsTimed(ST25R3911_IRQ_MASK_OSC, ST25R3911_OSC_STABLE_TIMEOUT);
         st25r3911DisableInterrupts(ST25R3911_IRQ_MASK_OSC);
     }
-    
+
 } /* st25r3911OscOn() */
 
 
@@ -120,9 +120,9 @@ void st25r3911Initialize()
     /* first, reset the st25r3911 */
     st25r3911ExecuteCommand(ST25R3911_CMD_SET_DEFAULT);
 
-        
+
     /* enable pull downs on miso line */
-    st25r3911ModifyRegister(ST25R3911_REG_IO_CONF2, 0, 
+    st25r3911ModifyRegister(ST25R3911_REG_IO_CONF2, 0,
             ST25R3911_REG_IO_CONF2_miso_pd1 |
             ST25R3911_REG_IO_CONF2_miso_pd2);
 
@@ -133,9 +133,9 @@ void st25r3911Initialize()
 
     /* trim settings for VHBR board, will anyway changed later on */
     st25r3911WriteRegister(ST25R3911_REG_ANT_CAL_TARGET, 0x80);
-    
+
     st25r3911OscOn();
-    
+
     /* Measure vdd and set sup3V bit accordingly */
     vdd_mV = st25r3911MeasureVoltage(ST25R3911_REG_REGULATOR_CONTROL_mpsv_vdd);
 
@@ -145,13 +145,13 @@ void st25r3911Initialize()
 
     /* Make sure Transmitter and Receiver are disabled */
     st25r3911TxRxOff();
-    
+
     return;
 }
 
 void st25r3911Deinitialize()
 {
-    st25r3911DisableInterrupts(ST25R3911_IRQ_MASK_ALL);    
+    st25r3911DisableInterrupts(ST25R3911_IRQ_MASK_ALL);
 
     /* Disabe Tx and Rx, Keep OSC */
     st25r3911TxRxOff();
@@ -208,7 +208,7 @@ void st25r3911MeasureRF(uint8_t* result)
 
 void st25r3911MeasureCapacitance(uint8_t* result)
 {
-    st25r3911ExecuteCommandAndGetResult(ST25R3911_CMD_MEASURE_CAPACITANCE, 
+    st25r3911ExecuteCommandAndGetResult(ST25R3911_CMD_MEASURE_CAPACITANCE,
                                     ST25R3911_REG_AD_RESULT,
                                     10,
                                     result);
@@ -278,14 +278,14 @@ ReturnCode st25r3911SetBitrate(uint8_t txRate, uint8_t rxRate)
         }
     }
     st25r3911WriteRegister(ST25R3911_REG_BIT_RATE, reg);
-    
+
     return ERR_NONE;
 }
 
 
 uint16_t st25r3911MeasureVoltage(uint8_t mpsv)
 {
-    uint8_t result; 
+    uint8_t result;
     uint16_t mV;
 
     mpsv &= ST25R3911_REG_REGULATOR_CONTROL_mask_mpsv;
@@ -308,9 +308,9 @@ uint16_t st25r3911MeasureVoltage(uint8_t mpsv)
 uint8_t st25r3911GetNumFIFOLastBits( void )
 {
     uint8_t  reg;
-    
+
     st25r3911ReadRegister( ST25R3911_REG_FIFO_RX_STATUS2, &reg );
-    
+
     return ((reg & ST25R3911_REG_FIFO_RX_STATUS2_mask_fifo_lb) >> ST25R3911_REG_FIFO_RX_STATUS2_shift_fifo_lb);
 }
 
@@ -323,8 +323,8 @@ void st25r3911StartGPTimer_8fcs(uint16_t gpt_8fcs, uint8_t trigger_source)
 {
     st25r3911SetGPTime_8fcs(gpt_8fcs);
 
-    st25r3911ModifyRegister(ST25R3911_REG_GPT_CONTROL, 
-            ST25R3911_REG_GPT_CONTROL_gptc_mask, 
+    st25r3911ModifyRegister(ST25R3911_REG_GPT_CONTROL,
+            ST25R3911_REG_GPT_CONTROL_gptc_mask,
             trigger_source);
     if (!trigger_source)
         st25r3911ExecuteCommand(ST25R3911_CMD_START_GP_TIMER);
@@ -343,10 +343,10 @@ void st25r3911SetGPTime_8fcs(uint16_t gpt_8fcs)
 bool st25r3911CheckReg( uint8_t reg, uint8_t mask, uint8_t val )
 {
     uint8_t regVal;
-    
+
     regVal = 0;
     st25r3911ReadRegister( reg, &regVal );
-    
+
     return ((regVal & mask) == val );
 }
 
@@ -354,21 +354,21 @@ bool st25r3911CheckReg( uint8_t reg, uint8_t mask, uint8_t val )
 bool st25r3911CheckChipID( uint8_t *rev )
 {
     uint8_t ID;
-    
-    ID = 0;    
+
+    ID = 0;
     st25r3911ReadRegister( ST25R3911_REG_IC_IDENTITY, &ID );
-    
+
     /* Check if IC Identity Register contains ST25R3911's IC type code */
     if( (ID & ST25R3911_REG_IC_IDENTITY_mask_ic_type) != ST25R3911_REG_IC_IDENTITY_ic_type )
     {
         return false;
     }
-        
+
     if(rev != NULL)
     {
         *rev = (ID & ST25R3911_REG_IC_IDENTITY_mask_ic_rev);
     }
-    
+
     return true;
 }
 
@@ -400,13 +400,13 @@ ReturnCode st25r3911SetNoResponseTime_64fcs(uint32_t nrt_64fcs)
 ReturnCode st25r3911SetStartNoResponseTime_64fcs(uint32_t nrt_64fcs)
 {
     ReturnCode err;
-    
+
     err = st25r3911SetNoResponseTime_64fcs( nrt_64fcs );
     if(err == ERR_NONE)
     {
         st25r3911ExecuteCommand(ST25R3911_CMD_START_NO_RESPONSE_TIMER);
     }
-    
+
     return err;
 }
 
@@ -414,54 +414,54 @@ ReturnCode st25r3911PerformCollisionAvoidance( uint8_t FieldONCmd, uint8_t pdThr
 {
     uint8_t  treMask;
     uint32_t irqs;
-    
-    if( (FieldONCmd != ST25R3911_CMD_INITIAL_RF_COLLISION)    && 
-        (FieldONCmd != ST25R3911_CMD_RESPONSE_RF_COLLISION_0) && 
+
+    if( (FieldONCmd != ST25R3911_CMD_INITIAL_RF_COLLISION)    &&
+        (FieldONCmd != ST25R3911_CMD_RESPONSE_RF_COLLISION_0) &&
         (FieldONCmd != ST25R3911_CMD_RESPONSE_RF_COLLISION_N)   )
     {
         return ERR_PARAM;
     }
-    
+
     /* Check if new thresholds are to be applied */
     if( (pdThreshold != ST25R3911_THRESHOLD_DO_NOT_SET) || (caThreshold != ST25R3911_THRESHOLD_DO_NOT_SET) )
     {
         treMask = 0;
-        
+
         if(pdThreshold != ST25R3911_THRESHOLD_DO_NOT_SET)
         {
             treMask |= ST25R3911_REG_FIELD_THRESHOLD_mask_trg;
         }
-        
+
         if(caThreshold != ST25R3911_THRESHOLD_DO_NOT_SET)
         {
             treMask |= ST25R3911_REG_FIELD_THRESHOLD_mask_rfe;
         }
-            
+
         /* Set Detection Threshold and|or Collision Avoidance Threshold */
         st25r3911ChangeRegisterBits( ST25R3911_REG_FIELD_THRESHOLD, treMask, (pdThreshold & ST25R3911_REG_FIELD_THRESHOLD_mask_trg) | (caThreshold & ST25R3911_REG_FIELD_THRESHOLD_mask_rfe ) );
     }
-    
+
     /* Set n x TRFW */
     st25r3911ModifyRegister(ST25R3911_REG_AUX, ST25R3911_REG_AUX_mask_nfc_n, (nTRFW & ST25R3911_REG_AUX_mask_nfc_n) );
-    
+
     /* Enable and clear CA specific interrupts and execute command */
     st25r3911EnableInterrupts( (ST25R3911_IRQ_MASK_CAC | ST25R3911_IRQ_MASK_CAT) );
     st25r3911GetInterrupt( (ST25R3911_IRQ_MASK_CAC | ST25R3911_IRQ_MASK_CAT) );
-    
+
     st25r3911ExecuteCommand(FieldONCmd);
-    
+
     irqs = st25r3911WaitForInterruptsTimed(ST25R3911_IRQ_MASK_CAC | ST25R3911_IRQ_MASK_CAT, ST25R3911_CA_TIMEOUT );
-    
+
     /* Clear any previous External Field events and disable CA specific interrupts */
     st25r3911GetInterrupt( (ST25R3911_IRQ_MASK_EOF | ST25R3911_IRQ_MASK_EON) );
     st25r3911DisableInterrupts(ST25R3911_IRQ_MASK_CAC | ST25R3911_IRQ_MASK_CAT);
-    
-    
+
+
     if(ST25R3911_IRQ_MASK_CAC & irqs)                             /* Collision occurred */
     {
         return ERR_RF_COLLISION;
     }
-    
+
     if(ST25R3911_IRQ_MASK_CAT & irqs)                             /* No Collision detected, Field On */
     {
         return ERR_NONE;
@@ -475,18 +475,18 @@ ReturnCode st25r3911GetRegsDump(uint8_t* resRegDump, uint8_t* sizeRegDump)
 {
     uint8_t regIt;
     uint8_t regDump[ST25R3911_REG_IC_IDENTITY+1];
-    
+
     if(!sizeRegDump || !resRegDump)
     {
         return ERR_PARAM;
     }
-    
+
     for( regIt = ST25R3911_REG_IO_CONF1; regIt < SIZEOF_ARRAY(regDump); regIt++ )
     {
         st25r3911ReadRegister(regIt, &regDump[regIt] );
     }
-    
-    *sizeRegDump = MIN(*sizeRegDump, regIt);    
+
+    *sizeRegDump = MIN(*sizeRegDump, regIt);
     ST_MEMCPY(resRegDump, regDump, *sizeRegDump );
 
     return ERR_NONE;
@@ -495,17 +495,17 @@ ReturnCode st25r3911GetRegsDump(uint8_t* resRegDump, uint8_t* sizeRegDump)
 
 void st25r3911SetNumTxBits( uint32_t nBits )
 {
-    st25r3911WriteRegister(ST25R3911_REG_NUM_TX_BYTES2, (uint8_t)((nBits >> 0) & 0xff)); 
-    st25r3911WriteRegister(ST25R3911_REG_NUM_TX_BYTES1, (uint8_t)((nBits >> 8) & 0xff));    
+    st25r3911WriteRegister(ST25R3911_REG_NUM_TX_BYTES2, (uint8_t)((nBits >> 0) & 0xff));
+    st25r3911WriteRegister(ST25R3911_REG_NUM_TX_BYTES1, (uint8_t)((nBits >> 8) & 0xff));
 }
 
 
 bool st25r3911IsCmdValid( uint8_t cmd )
 {
-    if( !((cmd >= ST25R3911_CMD_SET_DEFAULT)       && (cmd <= ST25R3911_CMD_ANALOG_PRESET))           && 
+    if( !((cmd >= ST25R3911_CMD_SET_DEFAULT)       && (cmd <= ST25R3911_CMD_ANALOG_PRESET))           &&
         !((cmd >= ST25R3911_CMD_MASK_RECEIVE_DATA) && (cmd <= ST25R3911_CMD_CLEAR_RSSI))              &&
         !((cmd >= ST25R3911_CMD_TRANSPARENT_MODE)  && (cmd <= ST25R3911_CMD_START_NO_RESPONSE_TIMER)) &&
-        !((cmd >= ST25R3911_CMD_TEST_CLEARA)       && (cmd <= ST25R3911_CMD_FUSE_PPROM))               )        
+        !((cmd >= ST25R3911_CMD_TEST_CLEARA)       && (cmd <= ST25R3911_CMD_FUSE_PPROM))               )
     {
         return false;
     }
@@ -535,7 +535,7 @@ ReturnCode st25r3911StreamConfigure(const struct st25r3911StreamConfig *config)
             return ERR_PARAM;
         }
         smd |= (6 - config->din) << ST25R3911_REG_STREAM_MODE_shift_scf;
-        if (config->report_period_length == 0) 
+        if (config->report_period_length == 0)
         {
             return ERR_PARAM;
         }
@@ -547,7 +547,7 @@ ReturnCode st25r3911StreamConfigure(const struct st25r3911StreamConfig *config)
     }
     smd |= (7 - config->dout) << ST25R3911_REG_STREAM_MODE_shift_stx;
 
-    if (config->report_period_length > 3) 
+    if (config->report_period_length > 3)
     {
         return ERR_PARAM;
     }
@@ -581,7 +581,7 @@ bool st25r3911IrqIsWakeUpAmplitude( void )
 * LOCAL FUNCTIONS
 ******************************************************************************
 */
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Executes a direct command and returns the result
  *

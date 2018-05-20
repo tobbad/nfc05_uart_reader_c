@@ -10,8 +10,8 @@
   *
   *        http://www.st.com/myliberty
   *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
   * AND SPECIFICALLY DISCLAIMING THE IMPLIED WARRANTIES OF MERCHANTABILITY,
   * FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
@@ -85,7 +85,7 @@
 
 #define ISO15693_PHY_DAT_MANCHESTER_1 0xaaaa
 
-#define ISO15693_PHY_BIT_BUFFER_SIZE 1000 /*!< 
+#define ISO15693_PHY_BIT_BUFFER_SIZE 1000 /*!<
                                 size of the receiving buffer. Might be adjusted
                                 if longer datastreams are expected. */
 
@@ -122,7 +122,7 @@ ReturnCode iso15693PhyConfigure(const iso15693PhyConfig_t* config, const struct 
 
     /* make a copy of the configuration */
     ST_MEMCPY(&iso15693PhyConfig, (uint8_t*)config, sizeof(iso15693PhyConfig_t));
-    
+
     /* If in fast mode the report period is half: 4=2^2 */
     stream_config.report_period_length = ( config->fastMode ? 2 : 3 );
 
@@ -160,7 +160,7 @@ ReturnCode iso15693VCDCode(uint8_t* buffer, uint16_t length, bool sendCrc, bool 
         txFunc = iso15693PhyVCDCode1Of4;
         *subbit_total_length = (
                 ( 1  /* SOF */
-                  + (length + crc_len) * 4 
+                  + (length + crc_len) * 4
                   + 1) /* EOF */
                 );
         if (outBufSize < 5)  /* 5 should be safe: enough for sof + 1byte data in 1of4 */
@@ -173,7 +173,7 @@ ReturnCode iso15693VCDCode(uint8_t* buffer, uint16_t length, bool sendCrc, bool 
         txFunc = iso15693PhyVCDCode1Of256;
         *subbit_total_length = (
                 ( 1  /* SOF */
-                  + (length + crc_len) * 64 
+                  + (length + crc_len) * 64
                   + 1) /* EOF */
                 );
 
@@ -205,7 +205,7 @@ ReturnCode iso15693VCDCode(uint8_t* buffer, uint16_t length, bool sendCrc, bool 
     /* Send SOF if at 0 offset */
     if (length && 0 == *offset)
     {
-        *outbuf = sof; 
+        *outbuf = sof;
         (*actOutBufSize)++;
         outBufSize--;
         outbuf++;
@@ -231,7 +231,7 @@ ReturnCode iso15693VCDCode(uint8_t* buffer, uint16_t length, bool sendCrc, bool 
             crc = rfalCrcCalculateCcitt( ((picopassMode) ? 0xE012 : 0xFFFF),         /* In PicoPass Mode a different Preset Value is used   */
                                          ((picopassMode) ? (buffer + 1) : buffer),   /* CMD byte is not taken into account in PicoPass mode */
                                          ((picopassMode) ? (length - 1) : length));  /* CMD byte is not taken into account in PicoPass mode */
-            
+
             crc = ((picopassMode) ? crc : ~crc);
         }
         /* send crc */
@@ -248,7 +248,7 @@ ReturnCode iso15693VCDCode(uint8_t* buffer, uint16_t length, bool sendCrc, bool 
     if ((!sendCrc && (*offset) == length)
             || (sendCrc && (*offset) == length + 2))
     {
-        *outbuf = eof; 
+        *outbuf = eof;
         (*actOutBufSize)++;
         outBufSize--;
         outbuf++;
@@ -278,9 +278,9 @@ ReturnCode iso15693VICCDecode(uint8_t *inBuf,
     /* first check for valid SOF. Since it starts with 3 unmodulated pulses it is 0x17. */
     if ((inBuf[0] & 0x1f) != 0x17)
     {
-		ISO_15693_DEBUG("0x%x\n", iso15693PhyBitBuffer[0]);
-		err = ERR_FRAMING;
-		goto out;
+        ISO_15693_DEBUG("0x%x\n", iso15693PhyBitBuffer[0]);
+        err = ERR_FRAMING;
+        goto out;
     }
     ISO_15693_DEBUG("SOF\n");
 
@@ -319,7 +319,7 @@ ReturnCode iso15693VICCDecode(uint8_t *inBuf,
             }
         }
         if (0 == man || 3 == man)
-        {  
+        {
             if (bp >= ignoreBits)
             {
                 err = ERR_RF_COLLISION;
@@ -350,10 +350,10 @@ ReturnCode iso15693VICCDecode(uint8_t *inBuf,
         /* finally, check crc */
         ISO_15693_DEBUG("Calculate CRC, val: 0x%x, outBufLen: ", *outBuf);
         ISO_15693_DEBUG("0x%x ", *outBufPos - 2);
-        
+
         crc = rfalCrcCalculateCcitt( ((picopassMode) ? 0xE012 : 0xFFFF), outBuf, *outBufPos - 2);
         crc = ((picopassMode) ? crc : ~crc);
-        
+
         if (((crc & 0xff) == outBuf[*outBufPos-2]) &&
                 (((crc >> 8) & 0xff) == outBuf[*outBufPos-1]))
         {
@@ -380,7 +380,7 @@ out:
 * LOCAL FUNCTIONS
 ******************************************************************************
 */
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Perform 1 of 4 coding and send coded data
  *
@@ -432,7 +432,7 @@ static ReturnCode iso15693PhyVCDCode1Of4(const uint8_t data, uint8_t* outbuf, ui
     return err;
 }
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Perform 1 of 256 coding and send coded data
  *

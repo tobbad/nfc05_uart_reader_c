@@ -1,24 +1,24 @@
-/* ----------------------------------------------------------------------      
-* Copyright (C) 2010-2014 ARM Limited. All rights reserved. 
-*      
+/* ----------------------------------------------------------------------
+* Copyright (C) 2010-2014 ARM Limited. All rights reserved.
+*
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
-*      
-* Project:      CMSIS DSP Library 
-* Title:	    arm_mat_cmplx_mult_q31.c      
-*      
-* Description:  Floating-point matrix multiplication.      
-*      
+* $Revision:    V.1.4.5
+*
+* Project:      CMSIS DSP Library
+* Title:        arm_mat_cmplx_mult_q31.c
+*
+* Description:  Floating-point matrix multiplication.
+*
 * Target Processor:          Cortex-M4/Cortex-M3/Cortex-M0
 *
-* Redistribution and use in source and binary forms, with or without 
+* Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions
 * are met:
 *   - Redistributions of source code must retain the above copyright
 *     notice, this list of conditions and the following disclaimer.
 *   - Redistributions in binary form must reproduce the above copyright
 *     notice, this list of conditions and the following disclaimer in
-*     the documentation and/or other materials provided with the 
+*     the documentation and/or other materials provided with the
 *     distribution.
 *   - Neither the name of ARM LIMITED nor the names of its contributors
 *     may be used to endorse or promote products derived from this
@@ -27,7 +27,7 @@
 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
 * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
 * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
 * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
@@ -35,41 +35,41 @@
 * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
 * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
 * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-* POSSIBILITY OF SUCH DAMAGE.     
+* POSSIBILITY OF SUCH DAMAGE.
 * -------------------------------------------------------------------- */
 #include "arm_math.h"
 
-/**     
- * @ingroup groupMatrix     
+/**
+ * @ingroup groupMatrix
  */
 
-/**      
- * @addtogroup CmplxMatrixMult      
- * @{      
+/**
+ * @addtogroup CmplxMatrixMult
+ * @{
  */
 
-/**      
- * @brief Q31 Complex matrix multiplication      
- * @param[in]       *pSrcA points to the first input complex matrix structure      
- * @param[in]       *pSrcB points to the second input complex matrix structure      
- * @param[out]      *pDst points to output complex matrix structure      
- * @return     		The function returns either      
- * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.      
- *      
- * @details      
- * <b>Scaling and Overflow Behavior:</b>      
- *      
- * \par      
- * The function is implemented using an internal 64-bit accumulator.      
- * The accumulator has a 2.62 format and maintains full precision of the intermediate      
- * multiplication results but provides only a single guard bit. There is no saturation      
- * on intermediate additions. Thus, if the accumulator overflows it wraps around and      
- * distorts the result. The input signals should be scaled down to avoid intermediate      
- * overflows. The input is thus scaled down by log2(numColsA) bits      
- * to avoid overflows, as a total of numColsA additions are performed internally.      
- * The 2.62 accumulator is right shifted by 31 bits and saturated to 1.31 format to yield the final result.      
- *      
- *      
+/**
+ * @brief Q31 Complex matrix multiplication
+ * @param[in]       *pSrcA points to the first input complex matrix structure
+ * @param[in]       *pSrcB points to the second input complex matrix structure
+ * @param[out]      *pDst points to output complex matrix structure
+ * @return          The function returns either
+ * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+ *
+ * @details
+ * <b>Scaling and Overflow Behavior:</b>
+ *
+ * \par
+ * The function is implemented using an internal 64-bit accumulator.
+ * The accumulator has a 2.62 format and maintains full precision of the intermediate
+ * multiplication results but provides only a single guard bit. There is no saturation
+ * on intermediate additions. Thus, if the accumulator overflows it wraps around and
+ * distorts the result. The input signals should be scaled down to avoid intermediate
+ * overflows. The input is thus scaled down by log2(numColsA) bits
+ * to avoid overflows, as a total of numColsA additions are performed internally.
+ * The 2.62 accumulator is right shifted by 31 bits and saturated to 1.31 format to yield the final result.
+ *
+ *
  */
 
 arm_status arm_mat_cmplx_mult_q31(
@@ -120,7 +120,7 @@ arm_status arm_mat_cmplx_mult_q31(
       /* For every row wise process, the column loop counter is to be initiated */
       col = numColsB;
 
-      /* For every row wise process, the pIn2 pointer is set     
+      /* For every row wise process, the pIn2 pointer is set
        ** to the starting address of the pSrcB data */
       pIn2 = pSrcB->pData;
 
@@ -229,7 +229,7 @@ arm_status arm_mat_cmplx_mult_q31(
           colCnt--;
         }
 
-        /* If the columns of pSrcA is not a multiple of 4, compute any remaining MACs here.     
+        /* If the columns of pSrcA is not a multiple of 4, compute any remaining MACs here.
          ** No loop unrolling is used. */
         colCnt = numColsA % 0x4u;
 
@@ -261,7 +261,7 @@ arm_status arm_mat_cmplx_mult_q31(
         /* Store the result in the destination buffer */
         *px++ = (q31_t) clip_q63_to_q31(sumReal1 >> 31);
         *px++ = (q31_t) clip_q63_to_q31(sumImag1 >> 31);
-        
+
         /* Update the pointer pIn2 to point to the  starting address of the next column */
         j++;
         pIn2 = pSrcB->pData + 2u * j;
@@ -288,6 +288,6 @@ arm_status arm_mat_cmplx_mult_q31(
   return (status);
 }
 
-/**     
- * @} end of MatrixMult group     
+/**
+ * @} end of MatrixMult group
  */

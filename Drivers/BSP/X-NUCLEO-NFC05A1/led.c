@@ -9,8 +9,8 @@
   *
   *        http://www.st.com/myliberty
   *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
   * AND SPECIFICALLY DISCLAIMING THE IMPLIED WARRANTIES OF MERCHANTABILITY,
   * FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
@@ -28,14 +28,14 @@
  *
  *  \author
  *
- *  \brief Implementation for controlling shield LEDs functionality 
+ *  \brief Implementation for controlling shield LEDs functionality
  *
  */
- 
+
 /*!
- * 
+ *
  */
- 
+
 /*
 ******************************************************************************
 * INCLUDES
@@ -43,7 +43,7 @@
 */
 #ifdef STM32L476xx
 #include "stm32l4xx.h"
-#else 
+#else
 #include "stm32f4xx.h"
 #endif
 
@@ -109,7 +109,7 @@ void ledOnOff(st25R3911Led_t Led, uint32_t delay)
     case LED_AP2P:  msLedAP2P = delay; break;
     default:
       break;
-  }  
+  }
 }
 void ledFeedbackHandler()
 {
@@ -118,28 +118,28 @@ void ledFeedbackHandler()
     if(msLedA == 0)
       ledOff(LED_A);
   }
-  
+
   if(msLedB > 0){
     msLedB--;
     if(msLedB == 0)
       ledOff(LED_B);
-  }   
-  
+  }
+
   if(msLedF > 0){
     msLedF--;
     if(msLedF == 0)
       ledOff(LED_F);
-  }  
-  
+  }
+
   if(msLedV > 0){
     msLedV--;
     if(msLedV == 0)
       ledOff(LED_V);
-  }    
-  
+  }
+
   if(msLedAP2P > 0){
     msLedAP2P--;
     if(msLedAP2P == 0)
       ledOff(LED_AP2P);
-  }  
+  }
 }

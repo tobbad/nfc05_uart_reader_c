@@ -10,8 +10,8 @@
   *
   *        http://www.st.com/myliberty
   *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
   * AND SPECIFICALLY DISCLAIMING THE IMPLIED WARRANTIES OF MERCHANTABILITY,
   * FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
@@ -32,7 +32,7 @@
  *
  *  \brief Implementation of NFC-F Poller (FeliCa PCD) device
  *
- *  The definitions and helpers methods provided by this module are 
+ *  The definitions and helpers methods provided by this module are
  *  aligned with NFC-F (FeliCa - JIS X6319-4)
  *
  */
@@ -132,10 +132,10 @@ static void rfalNfcfComputeValidSENF( rfalNfcfListenDevice *outDevInfo, uint8_t 
 static void rfalNfcfComputeValidSENF( rfalNfcfListenDevice *outDevInfo, uint8_t *curDevIdx, uint8_t devLimit, bool overwrite, bool *nfcDepFound )
 {
     uint8_t             tmpIdx;
-    bool                duplicate;    
+    bool                duplicate;
     rfalNfcfSensfResBuf *sensfBuf;
-    
-    
+
+
     /*******************************************************************************/
     /* Go through all responses check if valid and duplicates                      */
     /*******************************************************************************/
@@ -143,11 +143,11 @@ static void rfalNfcfComputeValidSENF( rfalNfcfListenDevice *outDevInfo, uint8_t 
     {
         duplicate = false;
         gRfalNfcfGreedyF.pollFound--;
-        
+
         /* Point to received SENSF_RES */
         sensfBuf = (rfalNfcfSensfResBuf*) &gRfalNfcfGreedyF.POLL_F[gRfalNfcfGreedyF.pollFound];
-        
-        
+
+
         /* Check for devices that are already in device list */
         for( tmpIdx = 0; tmpIdx < (*curDevIdx); tmpIdx++ )
         {
@@ -157,25 +157,25 @@ static void rfalNfcfComputeValidSENF( rfalNfcfListenDevice *outDevInfo, uint8_t 
                 break;
             }
         }
-        
-        /* If is a duplicate skip this (and not to overwrite)*/        
+
+        /* If is a duplicate skip this (and not to overwrite)*/
         if(duplicate && !overwrite)
         {
             continue;
         }
-        
+
         /* Check if response length is OK */
         if( (( sensfBuf->LEN - RFAL_NFCF_HEADER_LEN) < RFAL_NFCF_SENSF_RES_LEN_MIN) || ((sensfBuf->LEN - RFAL_NFCF_HEADER_LEN) > RFAL_NFCF_SENSF_RES_LEN_MAX) )
         {
             continue;
         }
-        
+
         /* Check if the response is a SENSF_RES / Polling response */
         if( sensfBuf->SENSF_RES.CMD != RFAL_NFCF_CMD_POLLING_RES )
         {
             continue;
         }
-        
+
         /* Check if is an overwrite request or new device*/
         if(duplicate && overwrite)
         {
@@ -188,12 +188,12 @@ static void rfalNfcfComputeValidSENF( rfalNfcfListenDevice *outDevInfo, uint8_t 
         {
             /* fill deviceInfo/GRE_SENSF_RES with new SENSF_RES */
             outDevInfo[(*curDevIdx)].sensfResLen = (sensfBuf->LEN - RFAL_NFCF_LENGTH_LEN);
-            ST_MEMCPY( &outDevInfo[(*curDevIdx)].sensfRes, &sensfBuf->SENSF_RES.CMD, outDevInfo[(*curDevIdx)].sensfResLen );            
+            ST_MEMCPY( &outDevInfo[(*curDevIdx)].sensfRes, &sensfBuf->SENSF_RES.CMD, outDevInfo[(*curDevIdx)].sensfResLen );
         }
-        
-        /* Check if this device supports NFC-DEP and signal it (ACTIVITY 1.1   9.3.6.63) */        
+
+        /* Check if this device supports NFC-DEP and signal it (ACTIVITY 1.1   9.3.6.63) */
         *nfcDepFound = rfalNfcfIsNfcDepSupported( &outDevInfo[(*curDevIdx)] );
-                
+
         (*curDevIdx)++;
     }
 }
@@ -208,19 +208,19 @@ static void rfalNfcfComputeValidSENF( rfalNfcfListenDevice *outDevInfo, uint8_t 
 ReturnCode rfalNfcfPollerInitialize( rfalBitRate bitRate )
 {
     ReturnCode ret;
-    
+
     if( (bitRate != RFAL_BR_212) && (bitRate != RFAL_BR_424) )
     {
         return ERR_PARAM;
     }
-    
+
     EXIT_ON_ERR( ret, rfalSetMode( RFAL_MODE_POLL_NFCF, bitRate, bitRate ) );
     rfalSetErrorHandling( RFAL_ERRORHANDLING_NFC );
-    
+
     rfalSetGT( RFAL_GT_NFCF );
     rfalSetFDTListen( RFAL_FDT_LISTEN_NFCF_POLLER );
     rfalSetFDTPoll( RFAL_FDT_POLL_NFCF_POLLER );
-    
+
     return ERR_NONE;
 }
 
@@ -237,7 +237,7 @@ ReturnCode rfalNfcfPollerCheckPresence( void )
 {
     gRfalNfcfGreedyF.pollFound     = 0;
     gRfalNfcfGreedyF.pollCollision = 0;
-        
+
     /* ACTIVITY 1.0 & 1.1 - 9.2.3.17 SENSF_REQ  must be with number of slots equal to 4
      *                                SC must be 0xFFFF
      *                                RC must be 0x00 (No system code info required) */
@@ -250,16 +250,16 @@ ReturnCode rfalNfcfPollerCollisionResolution( rfalComplianceMode compMode, uint8
 {
     ReturnCode  ret;
     bool        nfcDepFound;
-    
+
     if( nfcfDevList == NULL || devCnt == NULL )
     {
         return ERR_PARAM;
     }
-            
+
     *devCnt      = 0;
     nfcDepFound  = false;
-    
-    
+
+
     /*******************************************************************************************/
     /* ACTIVITY 1.0 - 9.3.6.3 Copy valid SENSF_RES in GRE_POLL_F into GRE_SENSF_RES            */
     /* ACTIVITY 1.0 - 9.3.6.6 The NFC Forum Device MUST remove all entries from GRE_SENSF_RES[]*/
@@ -270,7 +270,7 @@ ReturnCode rfalNfcfPollerCollisionResolution( rfalComplianceMode compMode, uint8
     /*******************************************************************************************/
     rfalNfcfComputeValidSENF( nfcfDevList, devCnt, (devLimit == 0 ? rfalNfcfSlots2CardNum( RFAL_FELICA_4_SLOTS ) : devLimit), false, &nfcDepFound );
 
-    
+
     /*******************************************************************************/
     /* ACTIVITY 1.0 - 9.3.6.4                                                      */
     /* ACTIVITY 1.1 - 9.3.63.60 Check if devices found are lower than the limit    */
@@ -279,17 +279,17 @@ ReturnCode rfalNfcfPollerCollisionResolution( rfalComplianceMode compMode, uint8
     if( *devCnt < devLimit )
     {
         /* ACTIVITY 1.0 - 9.3.6.5  Copy valid SENSF_RES and then to remove it
-         * ACTIVITY 1.1 - 9.3.6.65 Copy and filter duplicates                                           
-         * For now, due to some devices keep generating different nfcid2, we use 1.0  
+         * ACTIVITY 1.1 - 9.3.6.65 Copy and filter duplicates
+         * For now, due to some devices keep generating different nfcid2, we use 1.0
          * Phones detected: Samsung Galaxy Nexus,Samsung Galaxy S3,Samsung Nexus S */
         *devCnt = 0;
-        
+
         ret = rfalNfcfPollerPoll( RFAL_FELICA_16_SLOTS, RFAL_NFCF_SYSTEMCODE, RFAL_FELICA_POLL_RC_NO_REQUEST, gRfalNfcfGreedyF.POLL_F, &gRfalNfcfGreedyF.pollFound, &gRfalNfcfGreedyF.pollCollision );
         if( ret == ERR_NONE )
         {
             rfalNfcfComputeValidSENF( nfcfDevList, devCnt, devLimit, false, &nfcDepFound );
         }
-      
+
       /*******************************************************************************/
       /* ACTIVITY 1.1 -  9.3.6.63 Check if any device supports NFC DEP               */
       /*******************************************************************************/
@@ -302,7 +302,7 @@ ReturnCode rfalNfcfPollerCollisionResolution( rfalComplianceMode compMode, uint8
           }
       }
     }
-    
+
     return ERR_NONE;
 }
 
@@ -319,24 +319,24 @@ bool rfalNfcfListenerIsT3TReq( uint8_t* buf, uint16_t bufLen, uint8_t* nfcid2 )
                 return false;
             }
             break;
-            
+
         case RFAL_NFCF_CMD_WRITE_WITHOUT_ENCRYPTION:
             if( bufLen < RFAL_NFCF_WRITE_WO_ENCRYPTION_MIN_LEN )
             {
                 return false;
             }
             break;
-            
+
         default:
-            return false;       
+            return false;
     }
-    
+
     /* Output NFID2 if requested */
     if( nfcid2 != NULL )
     {
         ST_MEMCPY( nfcid2, (uint8_t*)(buf + RFAL_NFCF_CMD_LEN), RFAL_NFCF_NFCID2_LEN );
     }
-    
+
     return true;
 }
 
