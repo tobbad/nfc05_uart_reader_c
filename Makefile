@@ -35,9 +35,6 @@ Drivers \
 Application \
 Application/User \
 Application/User/Src \
-Application/User/Src/stm32l4xx_it.c \
-Application/User/Src/main.c \
-Application/User/Src/stm32l4xx_hal_msp.c \
 Drivers/CMSIS
 
 # firmware library path
@@ -51,33 +48,30 @@ BUILD_DIR = build
 ######################################
 # C sources
 C_SOURCES =  \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_dma.c \
 Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c \
-/Src/system_stm32l4xx.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_spi.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_flash.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr.c \
-Src/main.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_flash_ex.c \
-Src/stm32l4xx_hal_msp.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c \
-Src/main.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c \
-Src/stm32l4xx_it.c \
-Src/stm32l4xx_hal_msp.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_spi_ex.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart_ex.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c_ex.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_flash_ramfunc.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_dma_ex.c \
 Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c \
-Src/stm32l4xx_it.c \
+Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_dma.c \
+Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_dma_ex.c \
+Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_flash.c \
+Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_flash_ex.c \
+Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_flash_ramfunc.c \
+Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_gpio.c \
+Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c \
+Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c_ex.c \
+Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr.c \
+Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c \
 Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c \
 Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc_ex.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_gpio.c
+Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_spi.c \
+Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_spi_ex.c \
+Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c \
+Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c \
+Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c \
+Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart_ex.c \
+Src/main.c \
+Src/stm32l4xx_hal_msp.c \
+Src/stm32l4xx_it.c \
+/Src/system_stm32l4xx.c
 
 BSP_SRC=\
 Drivers/BSP/Components/ST25R3911/st25r3911.c \
@@ -87,7 +81,7 @@ Drivers/BSP/Components/ST25R3911/timer.c \
 Drivers/BSP/STM32L4xx_Nucleo/stm32l4xx_nucleo.c \
 Drivers/BSP/X-NUCLEO-NFC05A1/led.c 
 
-C_SOURCES += BSP_SRC
+C_SOURCES += ${BSP_SRC}
 
 MID_SRC= \
 Middlewares/rfal/Src/rfal_analogConfig.c \
@@ -103,7 +97,7 @@ Middlewares/rfal/Src/rfal_rfst25r3911.c \
 Middlewares/rfal/Src/rfal_st25tb.c \
 Middlewares/rfal/Src/rfal_t1t.c 
 
-C_SOURCES += MID_SRC
+C_SOURCES += ${MID_SRC}
 
 # ASM sources
 ASM_SOURCES =  \
@@ -163,7 +157,10 @@ C_INCLUDES =  \
 -IDrivers/STM32L4xx_HAL_Driver/Inc \
 -IDrivers/STM32L4xx_HAL_Driver/Inc/Legacy \
 -IDrivers/CMSIS/Device/ST/STM32L4xx/Include \
--IDrivers/CMSIS/Include
+-IDrivers/CMSIS/Include \
+-IMiddlewares/rfal/Inc \
+-IDrivers/BSP/Components/ST25R3911 \
+-IDrivers/BSP/STM32L4xx_Nucleo
 
 
 # compile gcc flags
