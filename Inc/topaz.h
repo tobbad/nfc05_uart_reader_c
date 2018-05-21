@@ -9,8 +9,8 @@
   *
   *        http://www.st.com/myliberty
   *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
   * AND SPECIFICALLY DISCLAIMING THE IMPLIED WARRANTIES OF MERCHANTABILITY,
   * FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
@@ -32,7 +32,7 @@
  *
  */
 /*!
- * 
+ *
  */
 
 #ifndef TOPAZ_H
@@ -58,7 +58,7 @@
 * GLOBAL DATATYPES
 ******************************************************************************
 */
-/*!< 
+/*!<
  * struct representing an TOPAZ PICC as returned by
  * #topazReqaWupa().
  */
@@ -72,7 +72,7 @@ typedef struct
                         otherwise no collision occured */
 }topazProximityCard_t;
 
-/*! 
+/*!
  * PCD command set.
  */
 typedef enum
@@ -91,7 +91,7 @@ typedef enum
 * GLOBAL FUNCTION PROTOTYPES
 ******************************************************************************
 */
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Initialize Topaz mode.
  *  \note This function needs to be called every time after switching
@@ -104,7 +104,7 @@ typedef enum
  */
 extern ReturnCode topazInitialize(void);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Deinitialize Topaz mode.
  *  \note This function should be called every time Topaz is not needed
@@ -116,7 +116,7 @@ extern ReturnCode topazInitialize(void);
  */
 extern ReturnCode topazDeinitialize(uint8_t keep_on);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Select a PICC and put it into READY state
  *
@@ -139,7 +139,7 @@ extern ReturnCode topazDeinitialize(uint8_t keep_on);
  */
 extern ReturnCode topazReqaWupa(topazCommand_t cmd, topazProximityCard_t* card);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Read the UID from a tag in READY state
  *
@@ -156,7 +156,7 @@ extern ReturnCode topazReqaWupa(topazCommand_t cmd, topazProximityCard_t* card);
  */
 extern ReturnCode topazReadUID(topazProximityCard_t* card);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Read the memory from a tag in READY state
  *
@@ -176,7 +176,7 @@ extern ReturnCode topazReadUID(topazProximityCard_t* card);
  */
 extern ReturnCode topazReadAll(const topazProximityCard_t* card, uint8_t *buf, uint16_t buf_size, uint16_t* act_size);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Write one byte of memory to a tag in READY state
  *

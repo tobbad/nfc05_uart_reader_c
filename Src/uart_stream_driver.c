@@ -158,48 +158,47 @@ uint16_t uartStreamOldFormatRequest ( )
 
 uint16_t uartStreamReceive ( )
 {
-    uint16_t rxLen = 0;
-    if( UART_OK == uartRxNBytes(CTRL_UART, uartRxBuffer, &rxLen) ) {
+    uint32_t rxLen = uartRxNBytes(CTRL_UART, uartRxBuffer, USB_HID_REPORT_SIZE);
+    if( rxLen > 0  ) {
+          /*
+           * Read the uart  buffer into the local buffer.
+           * When the RX-Length within the first streaming packet is
+           * longer than the HID payload, we have to concatenate several
+           * packets (up to max. 256 u8s)
+           */
 
-      /*
-       * Read the uart  buffer into the local buffer.
-       * When the RX-Length within the first streaming packet is
-       * longer than the HID payload, we have to concatenate several
-       * packets (up to max. 256 u8s)
-       */
+        uint16_t packetSize;
+        uint8_t payload  = UART_GET_PAYLOAD_SIZE( uartRxBuffer );
 
-    uint16_t packetSize;
-    uint8_t payload  = UART_GET_PAYLOAD_SIZE( uartRxBuffer );
+        if ( UART_STATUS( uartRxBuffer ) != 0 ) {
+          /* this is a request in the old format */
+          /* in the old format at this position we had the protocol id - which was never 0
+                 in the new format here this uint8_t is resered and 0 when sent from host to device */
+          return uartStreamOldFormatRequest( );
+        }
 
-    if ( UART_STATUS( uartRxBuffer ) != 0 ) {
-      /* this is a request in the old format */
-      /* in the old format at this position we had the protocol id - which was never 0
-             in the new format here this uint8_t is resered and 0 when sent from host to device */
-      return uartStreamOldFormatRequest( );
+        ioLedOn();
+
+        rxTid = UART_TID( uartRxBuffer );
+        /* adjust number of totally received u8s */
+        rxSize += payload;
+
+        /* add the new data at the end of the data in the rxBuffer (i.e. where rxEnd points to) */
+        memcpy( rxEnd, UART_PAYLOAD( uartRxBuffer ), payload );
+        rxEnd += payload;
+        packetSize = ST_STREAM_DR_GET_RX_LENGTH( rxBuffer ) + ST_STREAM_HEADER_SIZE;
+
+        ioLedOff();
+
+        if ( packetSize > rxSize ) {
+          /* indicate that we must continue receiving */
+          return 0;
+        }
+        rxEnd = rxBuffer;   /* next time we receive new data, we start over at buffer start */
+        return rxSize;
     }
-
-    ioLedOn();
-
-    rxTid = UART_TID( uartRxBuffer );
-    /* adjust number of totally received u8s */
-    rxSize += payload;
-
-    /* add the new data at the end of the data in the rxBuffer (i.e. where rxEnd points to) */
-    memcpy( rxEnd, UART_PAYLOAD( uartRxBuffer ), payload );
-    rxEnd += payload;
-    packetSize = ST_STREAM_DR_GET_RX_LENGTH( rxBuffer ) + ST_STREAM_HEADER_SIZE;
-
-    ioLedOff();
-
-    if ( packetSize > rxSize ) {
-      /* indicate that we must continue receiving */
-      return 0;
-    }
-    rxEnd = rxBuffer;   /* next time we receive new data, we start over at buffer start */
-    return rxSize;
-  }
-  /* indicate that we did not receive anything - try next time again */
-  return 0;
+    /* indicate that we did not receive anything - try next time again */
+    return 0;
 }
 
 void uartStreamTransmit ( uint16_t totalTxSize )

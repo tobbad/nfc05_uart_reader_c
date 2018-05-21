@@ -9,8 +9,8 @@
   *
   *        http://www.st.com/myliberty
   *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
   * AND SPECIFICALLY DISCLAIMING THE IMPLIED WARRANTIES OF MERCHANTABILITY,
   * FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
@@ -32,7 +32,7 @@
  *
  */
 /*!
- * 
+ *
  */
 
 #ifndef ISO_14443_COMMON_H
@@ -50,13 +50,13 @@
 * GLOBAL FUNCTION PROTOTYPES
 ******************************************************************************
 */
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Transmit an ISO14443 frame and get response
  *
- *  This function is used to transfer a payload (usually an APDU according to 
+ *  This function is used to transfer a payload (usually an APDU according to
  *  ISO7816-4).
- *  It handles all of chaining, waiting time extension and retransmission. It 
+ *  It handles all of chaining, waiting time extension and retransmission. It
  *  takes the parameters from last ATQB/ATTRIB/RATS/ATS.
  *
  *  Normally, a PICC should answer. This answer is then written to \a rxbuf
@@ -81,7 +81,7 @@ extern ReturnCode iso14443TransmitAndReceiveL4(const uint8_t* txbuf,
                                     uint8_t* rxbuf,
                                     uint16_t rxlen,
                                     uint16_t* actrxlength);
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Transmit an ISO14443 frame and get response
  *
@@ -113,7 +113,7 @@ extern ReturnCode iso14443TransmitAndReceive(const uint8_t* txbuf,
                                     uint16_t* actrxlength,
                                     uint32_t fwt_64fcs);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Deselect a PICC
  *

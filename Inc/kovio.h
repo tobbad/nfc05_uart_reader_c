@@ -9,8 +9,8 @@
   *
   *        http://www.st.com/myliberty
   *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
   * AND SPECIFICALLY DISCLAIMING THE IMPLIED WARRANTIES OF MERCHANTABILITY,
   * FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
@@ -32,7 +32,7 @@
  *
  */
 /*!
- * 
+ *
  */
 
 #ifndef KOVIO_H
@@ -57,7 +57,7 @@
 * GLOBAL DATATYPES
 ******************************************************************************
 */
-/*!< 
+/*!<
  * struct representing an KOVIO PICC as returned by
  * #kovioRead.
  */
@@ -72,7 +72,7 @@ typedef struct
 * GLOBAL FUNCTION PROTOTYPES
 ******************************************************************************
 */
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Initialize Kovio barcode mode.
  *  \note This function needs to be called every time after switching
@@ -85,7 +85,7 @@ typedef struct
  */
 extern ReturnCode kovioInitialize(void);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Deinitialize Kovio barcode mode.
  *  \note This function should be called every time iso 14443 a is not needed
@@ -97,7 +97,7 @@ extern ReturnCode kovioInitialize(void);
  */
 extern ReturnCode kovioDeinitialize(uint8_t keep_on);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Receive the 128 bit code of a Kovio tag
  *

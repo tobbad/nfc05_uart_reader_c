@@ -9,8 +9,8 @@
   *
   *        http://www.st.com/myliberty
   *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
   * AND SPECIFICALLY DISCLAIMING THE IMPLIED WARRANTIES OF MERCHANTABILITY,
   * FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
@@ -32,7 +32,7 @@
  *
  */
 /*!
- * 
+ *
  */
 
 #ifndef FELICA_H
@@ -57,7 +57,7 @@
 * GLOBAL DATATYPES
 ******************************************************************************
 */
-/*! 
+/*!
   struct representing an FELICA PICC as returned by
   #felicaPoll.
   Layout is:
@@ -78,7 +78,7 @@ struct felicaProximityCard
     uint8_t request_data[2];
 };
 
-/*! 
+/*!
  * PCD command set.
  */
 enum felicaCommand
@@ -117,7 +117,7 @@ enum felicaComParamRequest
 * GLOBAL FUNCTION PROTOTYPES
 ******************************************************************************
 */
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Initialize FELICA mode.
  *  \note This function needs to be called every time after switching
@@ -130,7 +130,7 @@ enum felicaComParamRequest
  */
 extern ReturnCode felicaInitialize(void);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Deinitialize FELICA mode.
  *  \note This function should be called every time iso 14443 a is not needed
@@ -142,14 +142,14 @@ extern ReturnCode felicaInitialize(void);
  */
 extern ReturnCode felicaDeinitialize(uint8_t keep_on);
 
-/*! 
+/*!
  *****************************************************************************
  *  This function sends to all PICCs in field the POLL command with the given
  *  number of slots.
  *
  *  \param[in] slots: the number of slots to be performed
- *  \param[in] sysCode1: as given in FeliCa poll command 
- *  \param[in] sysCode2: as given in FeliCa poll command 
+ *  \param[in] sysCode1: as given in FeliCa poll command
+ *  \param[in] sysCode2: as given in FeliCa poll command
  *  \param[in] compar: FeliCa communication paramters
  *  \param[out] card : Parameter of type #felicaProximityCard which holds
  *                the found card then.
@@ -170,10 +170,10 @@ extern ReturnCode felicaPoll(enum felicaSlots slots,
                      uint8_t *num_cols
                     );
 
-/*! 
+/*!
  *****************************************************************************
- *  Transfer sizeof_txbuf bytes to a FeliCa card and receive back up to 
- *  sizeof_rxbuf bytes 
+ *  Transfer sizeof_txbuf bytes to a FeliCa card and receive back up to
+ *  sizeof_rxbuf bytes
  *  \param[in] txbuf: buffer to transfer
  *  \param[in] sizeof_txbuf: number of bytes to transfer
  *  \param[out] rxbuf: buffer of read data

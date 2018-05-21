@@ -9,8 +9,8 @@
   *
   *        http://www.st.com/myliberty
   *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
   * AND SPECIFICALLY DISCLAIMING THE IMPLIED WARRANTIES OF MERCHANTABILITY,
   * FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
@@ -19,7 +19,7 @@
   *
 ******************************************************************************/
 /*
- *      PROJECT:   
+ *      PROJECT:
  *      $Revision: $
  *      LANGUAGE:  ANSI C
  */
@@ -54,7 +54,7 @@
  ******************************************************************************
  */
 typedef enum {
-	UART_OK = 0,
+    UART_OK = 0,
 } UART_RES;
 
 /*!

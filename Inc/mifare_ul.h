@@ -9,8 +9,8 @@
   *
   *        http://www.st.com/myliberty
   *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
   * AND SPECIFICALLY DISCLAIMING THE IMPLIED WARRANTIES OF MERCHANTABILITY,
   * FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
@@ -32,7 +32,7 @@
  *
  */
 /*!
- * 
+ *
  */
 
 #ifndef MIFARE_UL_H
@@ -50,7 +50,7 @@
 * GLOBAL FUNCTION PROTOTYPES
 ******************************************************************************
 */
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Read out a given number of bytes from a MIFARE UL PICC.
  *
@@ -77,7 +77,7 @@
  */
 extern ReturnCode mifareUlReadNBytes(uint8_t startAddr, uint8_t* readbuf, uint8_t length, uint8_t* actLength);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Write a page of a MIFARE UL PICC.
  *

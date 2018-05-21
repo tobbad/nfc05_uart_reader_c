@@ -10,8 +10,8 @@
   *
   *        http://www.st.com/myliberty
   *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
   * AND SPECIFICALLY DISCLAIMING THE IMPLIED WARRANTIES OF MERCHANTABILITY,
   * FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
@@ -30,12 +30,12 @@
  *
 *  \author Gustavo Patricio
  *
- *  \brief UART driver 
+ *  \brief UART driver
  *
- *  This is the implementation file for the UART driver. 
- *  This driver was developed to the STM32 platform and was adapted from 
+ *  This is the implementation file for the UART driver.
+ *  This driver was developed to the STM32 platform and was adapted from
  *  the original NFCC UART driver.
- *  
+ *
  */
 
 #ifndef UART_DRIVER_H
@@ -73,31 +73,31 @@ extern "C" {
 #define UART_BUFFER_ENTRY_SIZE (1)
 
 /*! Uart 0 offset */
-#define UART0 (0) 
+#define UART0 (0)
 /*! Uart 1 offset */
-#define UART1 (1) 
+#define UART1 (1)
 /*! Uart 2 offset */
-#define UART2 (2) 
+#define UART2 (2)
 
 /*! Clock Frequency for UART0 */
-#define UART0_CLK_FREQUENCY (20972000) 
+#define UART0_CLK_FREQUENCY (20972000)
 /*! Clock Frequency for UART1 and UART 2 */
-#define UART_CLK_FREQUENCY  (20972000) 
+#define UART_CLK_FREQUENCY  (20972000)
 
 /*! 2400 Baud */
-#define UART_BAUD_RATE_2400   (2400)   
+#define UART_BAUD_RATE_2400   (2400)
 /*! 4800 Baud */
-#define UART_BAUD_RATE_4800   (4800)   
+#define UART_BAUD_RATE_4800   (4800)
 /*! 9600 Baud */
-#define UART_BAUD_RATE_9600   (9600)   
+#define UART_BAUD_RATE_9600   (9600)
 /*! 19200 Baud */
-#define UART_BAUD_RATE_19200  (19200)  
+#define UART_BAUD_RATE_19200  (19200)
 /*! 38400 Baud */
-#define UART_BAUD_RATE_38400  (38400)  
+#define UART_BAUD_RATE_38400  (38400)
 /*! 115200 Baud */
-#define UART_BAUD_RATE_115200 (115200) 
+#define UART_BAUD_RATE_115200 (115200)
 /*! UART0 default baud rate */
-#define UART0_BAUD_RATE     UART_BAUD_RATE_115200 
+#define UART0_BAUD_RATE     UART_BAUD_RATE_115200
 
 /*
 ******************************************************************************
@@ -120,10 +120,10 @@ typedef void (* uartUpperLayerCallback )(void);
 ******************************************************************************
 */
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief Create RX and TX buffers
- *  
+ *
  *  Create an internal receive buffer of size rxBufferSize and another
  *  internal transmit buffer with size txBufferSize. The memory for the
  *  transmit and receive buffer is never freed.
@@ -139,12 +139,12 @@ typedef void (* uartUpperLayerCallback )(void);
  */
 ReturnCode uartCreate( uint8_t id, uint32_t rxBufferSize, uint32_t txBufferSize );
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief Set UART handler
- *  
+ *
  *  Sets the UART handler from STM32 HAL
- * 
+ *
  *  \param id : Identifier of the UART
  *  \param huart : UART handler
  *
@@ -152,10 +152,10 @@ ReturnCode uartCreate( uint8_t id, uint32_t rxBufferSize, uint32_t txBufferSize 
  */
 void uartSetHandler( uint8_t id, UART_HandleTypeDef *husart );
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief Initialize UART and set its baud rate
- *  
+ *
  *  Configures the hardware module for the given baud rate. The
  *  achieved baudrate may differ from the desired baud rate. The real baud
  *  rate will be written to realBaudRate if provided.
@@ -179,10 +179,10 @@ void uartSetHandler( uint8_t id, UART_HandleTypeDef *husart );
  */
 ReturnCode uartInitialize( uint8_t id, uint32_t clkSourceFrequency, uint32_t baudRate, uint32_t * realBaudRate);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief Resets the UART
- *  
+ *
  *  Resets the internal structures. Clears any buffers and resets the HW module
  *
  *  \param id : Identifier of the UART
@@ -193,10 +193,10 @@ ReturnCode uartInitialize( uint8_t id, uint32_t clkSourceFrequency, uint32_t bau
  */
 ReturnCode uartReset( uint8_t id );
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief Turns the UART off
- *  
+ *
  *  Turns off the UART.
  *
  *  \param id : Identifier of the UART
@@ -207,10 +207,10 @@ ReturnCode uartReset( uint8_t id );
  */
 ReturnCode uartDeinitialize( uint8_t id );
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief UART driver Interupt Handler
- *  
+ *
  *  Handles Interrupts from all three UARTS. UARTS are identified by the passed id.
  *
  *  \param id : Identifier of the UART
@@ -225,16 +225,16 @@ void uartHandleInterrupt( uint8_t id );
  *****************************************************************************
  * \brief Set System Rerun Callback
  *
- * Sets a callback for the driver to call when an event has occurred that 
+ * Sets a callback for the driver to call when an event has occurred that
  * may require the system to be notified
  *****************************************************************************
  */
 void uartSetUpperLayerCallback( uartUpperLayerCallback pFunc );
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief Get the number of bytes that can be transmitted
- *  
+ *
  *  Get the maximum number of bytes that the UART is able to transmit
  *
  *  \param id : Identifier of the UART
@@ -244,10 +244,10 @@ void uartSetUpperLayerCallback( uartUpperLayerCallback pFunc );
  */
 uint32_t uartMaxTxBytes( uint8_t id );
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief Send N bytes
- *  
+ *
  *  Copies up to size bytes from the buffer into the transmit buffer and starts
  *  transmitting immediately.
  *
@@ -262,10 +262,10 @@ uint32_t uartMaxTxBytes( uint8_t id );
  */
 uint32_t uartTxNBytes( uint8_t id, const uint8_t * buffer, uint32_t size );
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief Get number of bytes that can be fetched from buffer
- *  
+ *
  *  Get the number of bytes that are already received and waiting in the
  *  buffer to be received.
  *
@@ -276,10 +276,10 @@ uint32_t uartTxNBytes( uint8_t id, const uint8_t * buffer, uint32_t size );
  */
 uint32_t uartRxBytesReadyForReceive( uint8_t id );
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief Get N bytes from receive buffer
- *  
+ *
  *  Receive up to maxSize bytes from the internal receive buffer. The data
  *  is saved in buffer. If buffer is a null pointer no data is copied and
  *  the function returns 0.
@@ -293,10 +293,10 @@ uint32_t uartRxBytesReadyForReceive( uint8_t id );
  */
 uint32_t uartRxNBytes( uint8_t id, uint8_t * buffer, uint32_t maxSize );
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief Discard N bytes from receive buffer
- *  
+ *
  *  Discard up to maxSize bytes from the internal receive buffer.
  *
  *  \param id   : Identifier of the UART
@@ -307,10 +307,10 @@ uint32_t uartRxNBytes( uint8_t id, uint8_t * buffer, uint32_t maxSize );
  */
 uint32_t uartRxDiscardNBytes(uint8_t id, uint32_t size);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief Get the last error
- *  
+ *
  *  Returns the last error that occurred between the last call of either
  *  uartLastError, uartInitialize or uartReset.
  *

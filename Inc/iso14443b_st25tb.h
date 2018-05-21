@@ -9,8 +9,8 @@
   *
   *        http://www.st.com/myliberty
   *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
   * AND SPECIFICALLY DISCLAIMING THE IMPLIED WARRANTIES OF MERCHANTABILITY,
   * FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
@@ -54,7 +54,7 @@
 ******************************************************************************
 */
 
-/*!  
+/*!
  * struct representing the content of ATQB
  * See ISO14443b spec. for more information.
  */
@@ -72,7 +72,7 @@ typedef struct
 ******************************************************************************
 */
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Send Initiate command to all tags in the field.
  *
@@ -90,11 +90,11 @@ typedef struct
 ReturnCode iso14443B_ST25TB_Initiate( iso14443B_ST25TB_t* card);
 
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Send Pcall16 command to all tags in the field.
  *
- *  Start the polling loop with up to 16 slots. The first slots gets 
+ *  Start the polling loop with up to 16 slots. The first slots gets
  *  immediately executed.
  *
  *  \param[out] card : If there was a valid response it will stored as Chip_ID.
@@ -109,7 +109,7 @@ ReturnCode iso14443B_ST25TB_Initiate( iso14443B_ST25TB_t* card);
 ReturnCode iso14443B_ST25TB_Pcall16(iso14443B_ST25TB_t *card);
 
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Send slot marker command to all tags in the field.
  *
@@ -127,7 +127,7 @@ ReturnCode iso14443B_ST25TB_Pcall16(iso14443B_ST25TB_t *card);
  */
 ReturnCode iso14443B_ST25TB_Slot_marker(uint8_t slot_num, iso14443B_ST25TB_t *card);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Send Select command to tag with specified Chip_ID
  *
@@ -142,7 +142,7 @@ ReturnCode iso14443B_ST25TB_Slot_marker(uint8_t slot_num, iso14443B_ST25TB_t *ca
  */
 ReturnCode iso14443B_ST25TB_Select(const iso14443B_ST25TB_t *card);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Send Get_UID command to selected tag
  *
@@ -157,7 +157,7 @@ ReturnCode iso14443B_ST25TB_Select(const iso14443B_ST25TB_t *card);
  */
 ReturnCode iso14443B_ST25TB_Get_UID(iso14443B_ST25TB_t *card);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Send Completion command to selected tag
  *
@@ -169,7 +169,7 @@ ReturnCode iso14443B_ST25TB_Get_UID(iso14443B_ST25TB_t *card);
  */
 ReturnCode iso14443B_ST25TB_Completion(void);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Send Reset_to_Inventory command to selected tag
  *
@@ -182,7 +182,7 @@ ReturnCode iso14443B_ST25TB_Completion(void);
 ReturnCode iso14443B_ST25TB_Reset_to_inventory(void);
 
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Send Read_block command to selected tag
  *
@@ -198,11 +198,11 @@ ReturnCode iso14443B_ST25TB_Reset_to_inventory(void);
  */
 ReturnCode iso14443B_ST25TB_Read_block(uint8_t address, uint8_t rdata[4]);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Send Write_block command to selected tag and verify
  *
- *  As the write command does not have any response. This function will after the 
+ *  As the write command does not have any response. This function will after the
  *  write command a read command to verify the memory content.
  *
  *  \param[in] address: of the block to be read
@@ -218,12 +218,12 @@ ReturnCode iso14443B_ST25TB_Read_block(uint8_t address, uint8_t rdata[4]);
  */
 ReturnCode iso14443B_ST25TB_Write_block(uint8_t address, const uint8_t wdata[4]);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Singulate one card and get its UID
  *
- *  Complete Sequenc of Initiate() followed optionally by PCall16 and Slot 
- *  markers until one card could be read. This card will then be selected and 
+ *  Complete Sequenc of Initiate() followed optionally by PCall16 and Slot
+ *  markers until one card could be read. This card will then be selected and
  *  its UID read. The card will remain in Selected state.
  *
  *  \param[out] card : Chip_ID and UID of the singulated card.

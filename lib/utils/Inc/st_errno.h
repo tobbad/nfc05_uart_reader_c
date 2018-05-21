@@ -10,8 +10,8 @@
   *
   *        http://www.st.com/myliberty
   *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
   * AND SPECIFICALLY DISCLAIMING THE IMPLIED WARRANTIES OF MERCHANTABILITY,
   * FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
@@ -28,7 +28,7 @@
 
 /*! \file st_errno.h
  *
- *  \author 
+ *  \author
  *
  *  \brief Main error codes
  *
@@ -86,13 +86,13 @@ enum {
     ERR_IGNORE                            = 18, /*!< indicates error detected but to be ignored */
     ERR_SEMANTIC                          = 19, /*!< indicates error in state machine (unexpected cmd) */
     ERR_SYNTAX                            = 20, /*!< indicates error in state machine (unknown cmd) */
-    ERR_CRC                               = 21, /*!< crc error */ 
-    ERR_NOTFOUND                          = 22, /*!< transponder not found */ 
-    ERR_NOTUNIQUE                         = 23, /*!< transponder not unique - more than one transponder in field */ 
-    ERR_NOTSUPP                           = 24, /*!< requested operation not supported */ 
-    ERR_WRITE                             = 25, /*!< write error */ 
-    ERR_FIFO                              = 26, /*!< fifo over or underflow error */ 
-    ERR_PAR                               = 27, /*!< parity error */ 
+    ERR_CRC                               = 21, /*!< crc error */
+    ERR_NOTFOUND                          = 22, /*!< transponder not found */
+    ERR_NOTUNIQUE                         = 23, /*!< transponder not unique - more than one transponder in field */
+    ERR_NOTSUPP                           = 24, /*!< requested operation not supported */
+    ERR_WRITE                             = 25, /*!< write error */
+    ERR_FIFO                              = 26, /*!< fifo over or underflow error */
+    ERR_PAR                               = 27, /*!< parity error */
     ERR_DONE                              = 28, /*!< transfer has already finished */
     ERR_RF_COLLISION                      = 29, /*!< collision error (Bit Collision or during RF Collision avoidance ) */
     ERR_HW_OVERRUN                        = 30, /*!< lost one or more received bytes */
@@ -100,13 +100,13 @@ enum {
     ERR_SLEEP_REQ                         = 32, /*!< device requested sleep */
     ERR_WRONG_STATE                       = 33, /*!< incorrent state for requested operation */
     ERR_MAX_RERUNS                        = 34, /*!< blocking procedure reached maximum runs */
-    ERR_DISABLED                          = 35, /*!< operation aborted due to disabled configuration */ 
+    ERR_DISABLED                          = 35, /*!< operation aborted due to disabled configuration */
     ERR_HW_MISMATCH                       = 36, /*!< expected hw do not match  */
     ERR_LINK_LOSS                         = 37, /*!< Other device's field didn't behave as expected: turned off by Initiator in Passive mode, or AP2P did not turn on field */
     ERR_INVALID_HANDLE                    = 38, /*!< invalid or not initalized device handle */
 
     ERR_INCOMPLETE_BYTE                   = 40, /*!< Incomplete byte rcvd         */
-    ERR_INCOMPLETE_BYTE_01                = 41, /*!< Incomplete byte rcvd - 1 bit */    
+    ERR_INCOMPLETE_BYTE_01                = 41, /*!< Incomplete byte rcvd - 1 bit */
     ERR_INCOMPLETE_BYTE_02                = 42, /*!< Incomplete byte rcvd - 2 bit */
     ERR_INCOMPLETE_BYTE_03                = 43, /*!< Incomplete byte rcvd - 3 bit */
     ERR_INCOMPLETE_BYTE_04                = 44, /*!< Incomplete byte rcvd - 4 bit */

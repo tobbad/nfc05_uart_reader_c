@@ -9,8 +9,8 @@
   *
   *        http://www.st.com/myliberty
   *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
   * AND SPECIFICALLY DISCLAIMING THE IMPLIED WARRANTIES OF MERCHANTABILITY,
   * FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
@@ -32,7 +32,7 @@
  *
  */
 /*!
- * 
+ *
  * Moudle used to dispatch the commands received by the PC application.
  */
 
@@ -51,13 +51,13 @@
 ******************************************************************************
 */
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Handle interrupt requests which are targetted for the dispatcher
  *
  * The GUI may enable interrupts and read out proper results at the time of the
- * interrupt. 
- * This function handles these interrupts and stores the results for a later 
+ * interrupt.
+ * This function handles these interrupts and stores the results for a later
  * time when the GUI polls it.
  */
 extern void dispatcherInterruptHandler(void);

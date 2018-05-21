@@ -9,8 +9,8 @@
   *
   *        http://www.st.com/myliberty
   *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
   * AND SPECIFICALLY DISCLAIMING THE IMPLIED WARRANTIES OF MERCHANTABILITY,
   * FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
@@ -55,7 +55,7 @@
 * GLOBAL DATATYPES
 ******************************************************************************
 */
-/*! 
+/*!
  * PCD command set.
  */
 typedef enum
@@ -66,7 +66,7 @@ typedef enum
     ISO14443B_CMD_ATTRIB = 0x1D, /*!< command ATTRIB */
 }iso14443BCommand_t;
 
-/*! 
+/*!
  * slot count (N parameter) used for iso14443b anti collision
  */
 typedef enum
@@ -78,7 +78,7 @@ typedef enum
     ISO14443B_SLOT_COUNT_16 = 4,
 }iso14443BSlotCount_t;
 
-/*!  
+/*!
  * struct representing the content of ATQB
  * See ISO14443b spec. for more information.
  */
@@ -92,7 +92,7 @@ typedef struct
                         otherwise no collision occured */
 }iso14443BProximityCard_t;
 
-/*! 
+/*!
  * struct holding parameter needed for ATTRIB command
  * The parameters are called param1, param2, param3 and
  * param4 and are described in ISO14443-3 spec.
@@ -105,7 +105,7 @@ typedef struct
     uint8_t param4;
 }iso14443BAttribParameter_t;
 
-/*! 
+/*!
  * struct holding the answer to ATTRIB command
  */
 typedef struct
@@ -119,7 +119,7 @@ typedef struct
 * GLOBAL FUNCTION PROTOTYPES
 ******************************************************************************
 */
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Initialize ISO14443-B mode.
  *  \note This function needs to be called every time after switching
@@ -132,7 +132,7 @@ typedef struct
  */
 extern ReturnCode iso14443BInitialize(void);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Deinitialize ISO14443-B mode.
  *  \note This function should be called every time iso 14443b is not needed
@@ -144,7 +144,7 @@ extern ReturnCode iso14443BInitialize(void);
  */
 extern ReturnCode iso14443BDeinitialize(uint8_t keep_on);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Select a PICC and put it into READY_DECLARED state
  *
@@ -176,7 +176,7 @@ extern ReturnCode iso14443BSelect(iso14443BCommand_t cmd,
                         uint8_t afi,
                         iso14443BSlotCount_t slotCount);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Send the HLTB command
  *
@@ -194,7 +194,7 @@ extern ReturnCode iso14443BSelect(iso14443BCommand_t cmd,
  */
 extern ReturnCode iso14443BSendHltb(iso14443BProximityCard_t* card);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Enter protocol mode
  *

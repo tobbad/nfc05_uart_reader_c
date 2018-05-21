@@ -9,8 +9,8 @@
   *
   *        http://www.st.com/myliberty
   *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
   * AND SPECIFICALLY DISCLAIMING THE IMPLIED WARRANTIES OF MERCHANTABILITY,
   * FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
@@ -86,7 +86,7 @@
  * initiator message.
  */
 /*!
- * 
+ *
  */
 
 #ifndef NFC_H
@@ -111,14 +111,14 @@
  *  \note This function needs to be called every time after switching
  *  from a different mode.
  *
- *  \warning For Target mode nfcDepTargetSetParams() must be called right 
- *           after to configure Target's parameters 
+ *  \warning For Target mode nfcDepTargetSetParams() must be called right
+ *           after to configure Target's parameters
  *
  *  \param[in] is_active : whether it should be active or passive mode
  *  \param[in] is_initiator : whether we want to be initiator or target
  *  \param[in] bitrate : target bitrate: 2^bitrate * 106kBit/s
- *  \param[in] listenModeMask : listen modes to be accepted as Target 
- * 
+ *  \param[in] listenModeMask : listen modes to be accepted as Target
+ *
  *  \return ERR_IO : Error during communication.
  *  \return ERR_PARAM : Selected bitrate or \a is_active / \a is_initiator combination
  *  not supported.
@@ -131,10 +131,10 @@ extern ReturnCode nfcInitialize(uint8_t is_active, uint8_t is_initiator, uint8_t
 /*!
  *****************************************************************************
  *  \brief Deinitialize the NFC mode.
- *  
+ *
  *  \note This function should be called every time NFC is not needed
  *  any more.
- *  
+ *
  *  \return ERR_IO : Error during communication.
  *  \return ERR_NONE : No error.
  *
@@ -145,9 +145,9 @@ extern ReturnCode nfcDeinitialize(void);
 /*!
  *****************************************************************************
  *  \brief Set the transmit bitrate.
- *  
+ *
  *  \param[in] bitrate : Transmit bitrate: 2^bitrate * 106kBit/s
- *  
+ *
  *  \return ERR_PARAM : Invalid \a bitrate value.
  *  \return ERR_IO : Error during communication.
  *  \return ERR_NONE : No error.
@@ -159,9 +159,9 @@ ReturnCode nfcSetTxBitrate(uint8_t bitrate);
 /*!
  *****************************************************************************
  *  \brief Set the receive bitrate.
- *  
+ *
  *  \param[in] bitrate : Receive bitrate: 2^bitrate * 106kBit/s
- *  
+ *
  *  \return ERR_PARAM : Invalid \a bitrate value.
  *  \return ERR_IO : Error during communication.
  *  \return ERR_NONE : No error.
@@ -224,8 +224,8 @@ extern ReturnCode nfcRxNBytes(uint8_t *bitrate, uint8_t *buf, uint16_t bufsize, 
  *  This will transmit the given Data through NFC-DEP protocol, performing if
  *  required the necessary retransmissions and error handling.
  *  NFC-DEP header will be prepended to the given data before transmission.
- *  
- *  
+ *
+ *
  *  \param[in] buf : Buffer/Data to be transmitted.
  *  \param[in] bufSize : Number of bytes to be transmitted (= length of \a buf).
  *
@@ -239,7 +239,7 @@ extern ReturnCode nfcDepTx( const uint8_t *buf, uint16_t bufSize );
  *****************************************************************************
  *  \brief Receive Data via NFC-DEP protocol.
  *
- *  Checks the status of an ongoing NFC-DEP data reception. If the data 
+ *  Checks the status of an ongoing NFC-DEP data reception. If the data
  *  reception is completed then the received data will be stored in \a buf.
  *  The NFC-DEP header will be removed before returning to the caller
  *
@@ -265,20 +265,20 @@ extern ReturnCode nfcDepRx( uint8_t *buf, uint16_t bufsize, uint16_t *actlen );
  *****************************************************************************
  *  \brief NFC-DEP Initiator Handle Activation
  *
- *  This will perform the whole NFC-DEP Initiator activation, by sending 
- *  the ATR_REQ and if necessary will also send a PSL_REQ to change the 
+ *  This will perform the whole NFC-DEP Initiator activation, by sending
+ *  the ATR_REQ and if necessary will also send a PSL_REQ to change the
  *  communication parameters.
- *  
- *  
+ *
+ *
  *  \param[in]  nfcid3 : NFCID to be used on the ATR_REQ
- *  \param[in]  desiredBitRate : the bitrate that should be used for the 
- *                              following communications (if supported 
+ *  \param[in]  desiredBitRate : the bitrate that should be used for the
+ *                              following communications (if supported
  *                              by both devices)
  *  \param[in]  gbLen :  General bytes length
  *  \param[in]  gb    :  General bytes
  *  \param[out] currentBitRate :  actual bitrate after activation
  *  \param[out] atrResLen :  received ATR_RES length
- *  \param[out] atrRes received ATR_RES                   
+ *  \param[out] atrRes received ATR_RES
  *
  *  \return ERR_IO: Error during communication
  *  \return ERR_NONE : No error.
@@ -290,18 +290,18 @@ extern ReturnCode nfcDepInitiatorHandleActivation( uint8_t* nfcid3, uint8_t desi
  *****************************************************************************
  *  \brief NFC-DEP ATR_REQ
  *
- *  This Initiator method will send an ATR_REQ and wait for a valid 
+ *  This Initiator method will send an ATR_REQ and wait for a valid
  *  ATR_RES.
- *  
+ *
  *  \param[in]  nfcid3         : MFCID to be used on the ATR_REQ
  *  \param[in]  gbLen          :  General bytes length
  *  \param[in]  gb             :  General bytes
  *  \param[out] atrResLen      :  received ATR_RES length
- *  \param[out] atrRes         : received ATR_RES                   
+ *  \param[out] atrRes         : received ATR_RES
  *
  *  \return ERR_IO     : Error during communication
  *  \return ERR_PARAM  : Invalid parameter
- *  \return ERR_TIMEOUT: A timeout error occurred 
+ *  \return ERR_TIMEOUT: A timeout error occurred
  *  \return ERR_PROTO  : Protocol error occurred
  *  \return ERR_NONE   : No error.
  *****************************************************************************
@@ -312,16 +312,16 @@ extern ReturnCode nfcDepATR( uint8_t* nfcid3, uint8_t gbLen, uint8_t* gb, uint8_
  *****************************************************************************
  *  \brief NFC-DEP PSL_REQ
  *
- *  This Initiator method will send an PSL_REQ and wait for a valid 
+ *  This Initiator method will send an PSL_REQ and wait for a valid
  *  PSL_RES.
- *  
+ *
  *  \param[in]  txBR : transmission bitrate to be used
  *  \param[in]  rxBR : reception bitrate to be used
- *  \param[in]  lr   : length reduction (max frame size) to be used         
+ *  \param[in]  lr   : length reduction (max frame size) to be used
  *
  *  \return ERR_IO     : Error during communication
  *  \return ERR_PARAM  : Invalid parameter
- *  \return ERR_TIMEOUT: A timeout error occurred 
+ *  \return ERR_TIMEOUT: A timeout error occurred
  *  \return ERR_PROTO  : Protocol error occurred
  *  \return ERR_NONE   : No error.
  *****************************************************************************
@@ -337,7 +337,7 @@ extern ReturnCode nfcDepPSL( uint8_t txBR, uint8_t rxBR, uint8_t lr );
  *
  *  \return ERR_IO     : Error during communication
  *  \return ERR_PARAM  : Invalid parameter
- *  \return ERR_TIMEOUT: A timeout error occurred 
+ *  \return ERR_TIMEOUT: A timeout error occurred
  *  \return ERR_PROTO  : Protocol error occurred
  *  \return ERR_NONE   : No error.
  *****************************************************************************
@@ -353,7 +353,7 @@ extern ReturnCode nfcDepDeselect( void );
  *
  *  \return ERR_IO     : Error during communication
  *  \return ERR_PARAM  : Invalid parameter
- *  \return ERR_TIMEOUT: A timeout error occurred 
+ *  \return ERR_TIMEOUT: A timeout error occurred
  *  \return ERR_PROTO  : Protocol error occurred
  *  \return ERR_NONE   : No error.
  *****************************************************************************
@@ -364,12 +364,12 @@ extern ReturnCode nfcDepRelease( void );
  *****************************************************************************
  *  \brief NFC-DEP Set Target Parameters
  *
- *  This Target method will set all the necessary parameters for the  
- *  NFC-DEP protocol layer to handle Target activation 
- *  
- *  \warning Must be called/configured before performing nfcInitialize() 
+ *  This Target method will set all the necessary parameters for the
+ *  NFC-DEP protocol layer to handle Target activation
+ *
+ *  \warning Must be called/configured before performing nfcInitialize()
  *           into Target mode
- *  
+ *
  *  \param[in]  nfcid : NFCID to be used on the ATR_RES
  *  \param[in]  lr    : length reduction (max frame size) to be announced
  *  \param[in]  gbLen :  General bytes length
@@ -386,10 +386,10 @@ extern void nfcDepTargetSetParams( uint8_t *nfcid, uint8_t lr, uint8_t gbLen, ui
  *
  *  This Target method will handle the target activation procedure and
  *  report its outcome.
- *  
- *  The activation handling is triggered when nfcInitialize() is set to 
+ *
+ *  The activation handling is triggered when nfcInitialize() is set to
  *  Target mode.
- *  
+ *
  *  \param[out] bitrate  : current bitrate used
  *  \param[out] isActive : target's communication mode
  *  \param[out] atrReqLen: received ATR_REQ length
@@ -398,7 +398,7 @@ extern void nfcDepTargetSetParams( uint8_t *nfcid, uint8_t lr, uint8_t gbLen, ui
  *  \return ERR_IO     : Error during communication
  *  \return ERR_PARAM  : Invalid parameter
  *  \return ERR_BUSY   : Activation not finished
- *  \return ERR_TIMEOUT: A timeout error occurred 
+ *  \return ERR_TIMEOUT: A timeout error occurred
  *  \return ERR_PROTO  : Protocol error occurred
  *  \return ERR_NONE   : No error.
  *****************************************************************************

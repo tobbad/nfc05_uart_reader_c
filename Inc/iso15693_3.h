@@ -9,8 +9,8 @@
   *
   *        http://www.st.com/myliberty
   *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
   * AND SPECIFICALLY DISCLAIMING THE IMPLIED WARRANTIES OF MERCHANTABILITY,
   * FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
@@ -81,7 +81,7 @@
 * GLOBAL DATATYPES
 ******************************************************************************
 */
-/*! 
+/*!
  * structure representing an ISO15693 PICC
  */
 typedef struct
@@ -92,7 +92,7 @@ typedef struct
     uint16_t crc; /*!< CRC of response */
 }iso15693ProximityCard_t;
 
-/*! 
+/*!
  * structure holding the information returned by #iso15693GetPiccSystemInformation
  */
 typedef struct
@@ -107,7 +107,7 @@ typedef struct
     uint8_t icReference; /*!< IC reference field */
 }iso15693PiccSystemInformation_t;
 
-/*! 
+/*!
  * structure representing a memory block
  * of an ISO15693 PICC
  */
@@ -116,12 +116,12 @@ typedef struct
     uint8_t flags;
     uint8_t errorCode;
     uint8_t securityStatus; /*< security status byte */
-    uint8_t blocknr; 
+    uint8_t blocknr;
     uint8_t data[ISO15693_MAX_MEMORY_BLOCK_SIZE]; /*!< the content */
     uint8_t actualSize; /*!< actual size of \a data */
 }iso15693PiccMemoryBlock_t;
 
-/*! 
+/*!
  * enum holding possible slot count values used by inventory command.
  */
 typedef enum
@@ -135,7 +135,7 @@ typedef enum
 * GLOBAL FUNCTION PROTOTYPES
 ******************************************************************************
 */
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Initialize ISO15693 mode.
  *  \note This function needs to be called every time after switching
@@ -148,7 +148,7 @@ typedef enum
  */
 extern ReturnCode iso15693Initialize( bool useSlowTX, bool useFastRX );
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Deinitialize ISO15693 mode.
  *  \note This function should be called every time iso 15693 is not needed
@@ -160,7 +160,7 @@ extern ReturnCode iso15693Initialize( bool useSlowTX, bool useFastRX );
  */
 extern ReturnCode iso15693Deinitialize(uint8_t keep_on);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Perform an ISO15693 inventory to return all PICCs in field.
  *
@@ -191,7 +191,7 @@ extern ReturnCode iso15693Inventory(iso15693NumSlots_t slotcnt,
                     uint8_t maxCards,
                     uint8_t* cardsFound);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Send command 'stay quiet' to given PICC.
  *
@@ -207,7 +207,7 @@ extern ReturnCode iso15693Inventory(iso15693NumSlots_t slotcnt,
  */
 extern ReturnCode iso15693SendStayQuiet(const iso15693ProximityCard_t* card);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Send command 'Select' to select a PICC for non-addressed mode.
  *
@@ -225,7 +225,7 @@ extern ReturnCode iso15693SendStayQuiet(const iso15693ProximityCard_t* card);
  */
 extern ReturnCode iso15693SelectPicc(const iso15693ProximityCard_t* card);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Send command 'get system information' to retrieve information
  *  from a given or selected PICC.
@@ -257,7 +257,7 @@ extern ReturnCode iso15693SelectPicc(const iso15693ProximityCard_t* card);
 extern ReturnCode iso15693GetPiccSystemInformation(const iso15693ProximityCard_t* card,
                                 iso15693PiccSystemInformation_t* sysInfo, uint16_t *sysInfoLen);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Read a single block from a given or selected PICC.
  *
@@ -352,7 +352,7 @@ extern ReturnCode iso15693FastReadSingleBlock(const iso15693ProximityCard_t* car
 extern ReturnCode iso15693FastReadMultipleBlocks(const iso15693ProximityCard_t* card, uint8_t startblock, uint8_t numBlocks,
                                         uint8_t* res_flags, uint8_t* data, uint16_t dataLen, uint16_t *actLen );
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Read multiple blocks from a given or selected PICC.
  *
@@ -386,7 +386,7 @@ extern ReturnCode iso15693FastReadMultipleBlocks(const iso15693ProximityCard_t* 
 extern ReturnCode iso15693ReadMultipleBlocks(const iso15693ProximityCard_t* card, uint8_t startblock, uint8_t numBlocks,
                                         uint8_t* res_flags, uint8_t* data, uint16_t dataLen, uint16_t *actLen );
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Write a single block of a given or selected PICC.
  *
@@ -401,7 +401,7 @@ extern ReturnCode iso15693ReadMultipleBlocks(const iso15693ProximityCard_t* card
  *                    is ignored and the information is fetched from the PICC
  *                    priorly selected with #iso15693SelectPicc
  *  \param[in] flags : flags to be sent to the card. The bit
- *                     #ISO15693_REQ_FLAG_OPTION specifies if the response 
+ *                     #ISO15693_REQ_FLAG_OPTION specifies if the response
  *                     must be polled separately.
  *                     This is required by some cards (e.g. from TI) to work
  *                     other cards refuse write command if option flag is set.
@@ -422,7 +422,7 @@ extern ReturnCode iso15693WriteSingleBlock(const iso15693ProximityCard_t* card,
                                 uint8_t flags,
                                 iso15693PiccMemoryBlock_t* memBlock);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Generic command to write and read arbitrary byte arrays
  *
@@ -433,8 +433,8 @@ extern ReturnCode iso15693WriteSingleBlock(const iso15693ProximityCard_t* card,
  *  \param[out] rxBuf
  *  \param[in] rxLen
  *  \param[out] actlength : return the actual received length inside rxBuf
- *  \param[in] response_wait_ms : number of ms to wait for answer or before 
- *                                sending another EOF and receive the answer 
+ *  \param[in] response_wait_ms : number of ms to wait for answer or before
+ *                                sending another EOF and receive the answer
  *                                afterwards
  *
  *  \return ERR_IO : Error during communication.

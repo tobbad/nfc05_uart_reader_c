@@ -28,12 +28,12 @@
 */
 /*! \file
  *
- *  \author 
+ *  \author
  *
  *  \brief SPI communication header file
  *
  */
- 
+
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __spi_H
 #define __spi_H
@@ -44,19 +44,19 @@
 /*!
  *****************************************************************************
  *  \brief  Initalize SPI
- * 
+ *
  *  This function initalize the SPI handle.
  *
  *  \param[in] hspi : pointer to initalized SPI block
  *
  *****************************************************************************
- */   
+ */
 void spiInit(SPI_HandleTypeDef *hspi);
 
 /*!
  *****************************************************************************
  *  \brief  Set SPI CS line
- * 
+ *
  *  \param[in] ssPort : pointer CS gpio port
  *
  *  \param[in] ssPin : CS pin
@@ -70,7 +70,7 @@ void spiSelect(GPIO_TypeDef *ssPort, uint16_t ssPin);
 /*!
  *****************************************************************************
  *  \brief  Reset SPI CS line
- * 
+ *
  *  \param[in] ssPort : pointer CS gpio port
  *
  *  \param[in] ssPin : CS pin
@@ -83,11 +83,11 @@ void spiDeselect(GPIO_TypeDef *ssPort, uint16_t ssPin);
 
 /*!
  *****************************************************************************
- *  \brief  Transmit Receive data 
- * 
- *  This funtion transmits first no of "length" bytes from "txData" and tries 
+ *  \brief  Transmit Receive data
+ *
+ *  This funtion transmits first no of "length" bytes from "txData" and tries
  *  then to receive "length" bytes.
- * 
+ *
  *  \param[in] txData : pointer to buffer to be transmitted.
  *
  *  \param[out] rxData : pointer to buffer to be received.
@@ -99,6 +99,6 @@ void spiDeselect(GPIO_TypeDef *ssPort, uint16_t ssPin);
  *****************************************************************************
  */
 HAL_StatusTypeDef spiTxRx(const uint8_t *txData, uint8_t *rxData, uint16_t length);
-   
+
 #endif /*__spi_H */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

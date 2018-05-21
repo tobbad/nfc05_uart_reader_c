@@ -9,8 +9,8 @@
   *
   *        http://www.st.com/myliberty
   *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
   * AND SPECIFICALLY DISCLAIMING THE IMPLIED WARRANTIES OF MERCHANTABILITY,
   * FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
@@ -32,7 +32,7 @@
  *
  */
 /*!
- * 
+ *
  */
 
 #ifndef ISO_14443_A_H
@@ -60,7 +60,7 @@
 * GLOBAL DATATYPES
 ******************************************************************************
 */
-/*!< 
+/*!<
  * struct representing an ISO14443A PICC as returned by
  * #iso14443ASelect.
  */
@@ -75,7 +75,7 @@ typedef struct
                         otherwise no collision occured */
 }iso14443AProximityCard_t;
 
-/*! 
+/*!
  * PCD command set.
  */
 typedef enum
@@ -95,7 +95,7 @@ typedef enum
 * GLOBAL FUNCTION PROTOTYPES
 ******************************************************************************
 */
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Initialize ISO14443-A mode.
  *  \note This function needs to be called every time after switching
@@ -108,7 +108,7 @@ typedef enum
  */
 extern ReturnCode iso14443AInitialize(void);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Deinitialize ISO14443-A mode.
  *  \note This function should be called every time iso 14443 a is not needed
@@ -120,7 +120,7 @@ extern ReturnCode iso14443AInitialize(void);
  */
 extern ReturnCode iso14443ADeinitialize(uint8_t keep_on);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Select a PICC and put it into ACTIVE state
  *
@@ -146,7 +146,7 @@ extern ReturnCode iso14443ADeinitialize(uint8_t keep_on);
  */
 extern ReturnCode iso14443ASelect(iso14443ACommand_t cmd, iso14443AProximityCard_t* card, uint8_t perform_anticollision);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Send the HLTA command
  *
@@ -162,7 +162,7 @@ extern ReturnCode iso14443ASelect(iso14443ACommand_t cmd, iso14443AProximityCard
  */
 extern ReturnCode iso14443ASendHlta(void);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Enter protocol mode
  *
@@ -171,7 +171,7 @@ extern ReturnCode iso14443ASendHlta(void);
  *  command. If the PICC receives the RATS command it backscatters the ATS
  *  which will be stored to \a answer.
  *
- *  \param[in] fscid : the parameter byte send with RATS containing 
+ *  \param[in] fscid : the parameter byte send with RATS containing
  *           frame size and card id. Refer to ISO14443-4 for exact coding.
  *  \param[out] answer : buffer where ATS will be stored
  *  \param[in] maxlength : max. length of the answer (= size of \a answer)
@@ -186,7 +186,7 @@ extern ReturnCode iso14443ASendHlta(void);
  */
 extern ReturnCode iso14443AEnterProtocolMode(uint8_t fscid, uint8_t* answer, uint16_t maxlength, uint16_t* length);
 
-/*! 
+/*!
  *****************************************************************************
  *  \brief  Send protocol and parameter selection request
  *
