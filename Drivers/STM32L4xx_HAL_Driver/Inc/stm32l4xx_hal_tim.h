@@ -279,21 +279,21 @@ typedef struct {
   */
 typedef struct
 {
-  uint32_t OffStateRunMode;       /*!< TIM off state in run mode
+  uint32_t OffStateRunMode;	      /*!< TIM off state in run mode
                                          This parameter can be a value of @ref TIM_OSSR_Off_State_Selection_for_Run_mode_state */
-  uint32_t OffStateIDLEMode;          /*!< TIM off state in IDLE mode
+  uint32_t OffStateIDLEMode;	      /*!< TIM off state in IDLE mode
                                          This parameter can be a value of @ref TIM_OSSI_Off_State_Selection_for_Idle_mode_state */
-  uint32_t LockLevel;             /*!< TIM Lock level
+  uint32_t LockLevel;	 	      /*!< TIM Lock level
                                          This parameter can be a value of @ref TIM_Lock_level */
-  uint32_t DeadTime;              /*!< TIM dead Time
+  uint32_t DeadTime;	 	      /*!< TIM dead Time
                                          This parameter can be a number between Min_Data = 0x00 and Max_Data = 0xFF */
-  uint32_t BreakState;            /*!< TIM Break State
+  uint32_t BreakState;	 	      /*!< TIM Break State
                                          This parameter can be a value of @ref TIM_Break_Input_enable_disable */
   uint32_t BreakPolarity;             /*!< TIM Break input polarity
                                          This parameter can be a value of @ref TIM_Break_Polarity */
   uint32_t BreakFilter;               /*!< Specifies the break input filter.
                                          This parameter can be a number between Min_Data = 0x0 and Max_Data = 0xF */
-  uint32_t Break2State;           /*!< TIM Break2 State
+  uint32_t Break2State;	 	      /*!< TIM Break2 State
                                          This parameter can be a value of @ref TIM_Break2_Input_enable_disable */
   uint32_t Break2Polarity;            /*!< TIM Break2 input polarity
                                          This parameter can be a value of @ref TIM_Break2_Polarity */
@@ -726,7 +726,7 @@ typedef struct
 /** @defgroup TIM_OSSR_Off_State_Selection_for_Run_mode_state TIM OSSR OffState Selection for Run mode state
   * @{
   */
-#define TIM_OSSR_ENABLE                      (TIM_BDTR_OSSR)
+#define TIM_OSSR_ENABLE 	                 (TIM_BDTR_OSSR)
 #define TIM_OSSR_DISABLE                   ((uint32_t)0x0000)
 /**
   * @}
@@ -735,7 +735,7 @@ typedef struct
 /** @defgroup TIM_OSSI_Off_State_Selection_for_Idle_mode_state TIM OSSI OffState Selection for Idle mode state
   * @{
   */
-#define TIM_OSSI_ENABLE                      (TIM_BDTR_OSSI)
+#define TIM_OSSI_ENABLE	 	                 (TIM_BDTR_OSSI)
 #define TIM_OSSI_DISABLE                   ((uint32_t)0x0000)
 /**
   * @}
@@ -743,7 +743,7 @@ typedef struct
 /** @defgroup TIM_Lock_level  TIM Lock level
   * @{
   */
-#define TIM_LOCKLEVEL_OFF                    ((uint32_t)0x0000)
+#define TIM_LOCKLEVEL_OFF	                 ((uint32_t)0x0000)
 #define TIM_LOCKLEVEL_1                    (TIM_BDTR_LOCK_0)
 #define TIM_LOCKLEVEL_2                    (TIM_BDTR_LOCK_1)
 #define TIM_LOCKLEVEL_3                    (TIM_BDTR_LOCK)
@@ -1695,7 +1695,7 @@ mode.
                                      ((__MODE__) == TIM_SLAVEMODE_COMBINED_RESETTRIGGER))
 
 #define IS_TIM_PWM_MODE(__MODE__) (((__MODE__) == TIM_OCMODE_PWM1)               || \
-                                     ((__MODE__) == TIM_OCMODE_PWM2)               || \
+	                                 ((__MODE__) == TIM_OCMODE_PWM2)               || \
                                    ((__MODE__) == TIM_OCMODE_COMBINED_PWM1)      || \
                                    ((__MODE__) == TIM_OCMODE_COMBINED_PWM2)      || \
                                    ((__MODE__) == TIM_OCMODE_ASSYMETRIC_PWM1)    || \
@@ -1947,7 +1947,7 @@ void HAL_TIM_IRQHandler(TIM_HandleTypeDef *htim);
   */
 
 /** @defgroup TIM_Exported_Functions_Group8 Peripheral Control functions
- *  @brief      Peripheral Control functions
+ *  @brief   	Peripheral Control functions
   * @{
   */
 /* Control functions  *********************************************************/
