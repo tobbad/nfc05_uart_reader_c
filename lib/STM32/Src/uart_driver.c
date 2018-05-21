@@ -91,7 +91,7 @@ static uint8_t uart0ReceiveDMABuffer[UART_DMA_BUFFER_SIZE] __attribute__ ((align
 static uint8_t uart0TransmitDMABuffer[UART_DMA_BUFFER_SIZE] __attribute__ ((aligned (UART_DMA_BUFFER_SIZE)));
 
 static uartUpperLayerCallback uartSysRerunCb;             /*!< System callback for indication of an event that may require the system to be notified */
-static uartInf uartInfo[UART_MAX_NUMBER_OF_UARTS] = {NULL, ERR_NONE, 0, NULL, ERR_NONE, 0}; /*!< Information about each uart*/
+static uartInf uartInfo[UART_MAX_NUMBER_OF_UARTS] = {{NULL, ERR_NONE, 0},{NULL, ERR_NONE, 0}}; /*!< Information about each uart*/
 
 /*
 ******************************************************************************

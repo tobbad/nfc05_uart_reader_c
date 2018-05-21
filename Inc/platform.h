@@ -135,7 +135,7 @@
 #define platformLedOff( port, pin )                   platformGpioClear(port, pin)                  /*!< Turns the given LED Off                     */
 #define platformLedOn( port, pin )                    platformGpioSet(port, pin)                    /*!< Turns the given LED On                      */
 #define platformLedOnOff( port, pin, delay_ms )       {platformGpioSet(port, pin);\
-                                                       platformDelay(delay_ms); \
+                                                       /* ToDo must be Non blocking platformDelay(delay_ms);*/ \
                                                        platformGpioClear(port, pin);}               /*!< Turns the given LED On and after delay off  */
 #define platformLedToogle( port, pin )                platformGpioToogle(port, pin)                 /*!< Toogle the given LED                        */
 

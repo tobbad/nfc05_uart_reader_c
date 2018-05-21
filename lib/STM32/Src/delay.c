@@ -40,6 +40,7 @@
 * INCLUDES
 ******************************************************************************
 */
+#include "stm32l4xx.h"
 #include "delay.h"
 
 
@@ -67,7 +68,7 @@ void delayUs(uint32_t micros)
 {
   uint32_t start = getUs();
   while (getUs() - start < micros) {
-      __nop();
+      asm("nop");
   }
 }
 
