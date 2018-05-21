@@ -41,14 +41,11 @@
 #include "stm32l4xx_hal.h"
 
 /* USER CODE BEGIN Includes */
-#include "demo.h"
 #include "platform.h"
 #include "logger.h"
-#include "usart.h"
 #include "spi.h"
-#include "led.h"
+#include "uart_driver.h"
 #include "bootloader.h"
-#include "usbd_custom_hid_if.h"
 
 #include "stream_dispatcher.h"
 #include "dispatcher.h"
@@ -128,7 +125,8 @@ int main(void)
 
   /* SPI Connection to ST25R3911 */
   spiInit(&hspi1);
-
+  uartSetHandler(LOGGER_UART, &huart1);
+  uartSetHandler(CTRL_UART, &huart2);
   /* Initialize log module */
   logUsartInit(&huart2);
 

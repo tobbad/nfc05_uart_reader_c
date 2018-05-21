@@ -66,6 +66,7 @@
 #include "stdbool.h"
 #include "limits.h"
 
+#include "st_errno.h"
 #include "spi.h"
 #include "timer.h"
 #include "main.h"
@@ -91,6 +92,7 @@
 #define PLATFORM_LED_FIELD_PORT     LED_FIELD_GPIO_Port /*!< GPIO port used as field LED                       */
 #endif
 
+#define VISUAL_FEEDBACK_DELAY   600
 
 #define PLATFORM_LED_A_PIN           LED_A_Pin             /*!< GPIO pin used for LED A    */
 #define PLATFORM_LED_A_PORT          LED_A_GPIO_Port       /*!< GPIO port used for LED A   */
@@ -107,6 +109,8 @@
 #define PLATFORM_USER_BUTTON_PORT    B1_GPIO_Port          /*!< GPIO port user button      */
 
 #define USE_LOGGER LOGGER_ON
+#define LOGGER_UART 0
+#define CTRL_UART	1
 /*
 ******************************************************************************
 * GLOBAL MACROS
@@ -130,6 +134,9 @@
 
 #define platformLedOff( port, pin )                   platformGpioClear(port, pin)                  /*!< Turns the given LED Off                     */
 #define platformLedOn( port, pin )                    platformGpioSet(port, pin)                    /*!< Turns the given LED On                      */
+#define platformLedOnOff( port, pin, delay_ms )       {platformGpioSet(port, pin);\
+													   platformDelay(delay_ms); \
+													   platformGpioClear(port, pin);}    			/*!< Turns the given LED On and after delay off  */
 #define platformLedToogle( port, pin )                platformGpioToogle(port, pin)                 /*!< Toogle the given LED                        */
 
 #define platformGpioSet( port, pin )                  HAL_GPIO_WritePin(port, pin, GPIO_PIN_SET)    /*!< Turns the given GPIO High                   */
@@ -146,7 +153,7 @@
 
 #define platformSpiSelect()                           platformGpioClear( ST25R391X_SS_PORT, ST25R391X_SS_PIN ) /*!< SPI SS\CS: Chip|Slave Select                */
 #define platformSpiDeselect()                         platformGpioSet( ST25R391X_SS_PORT, ST25R391X_SS_PIN )   /*!< SPI SS\CS: Chip|Slave Deselect              */
-#define platformSpiTxRx( txBuf, rxBuf, len )          SpiTxRx(txBuf, rxBuf, len)                    /*!< SPI transceive                              */
+#define platformSpiTxRx( txBuf, rxBuf, len )          spiTxRx(txBuf, rxBuf, len)                    /*!< SPI transceive                              */
 
 
 #define platformI2CTx( txBuf, len )                                                                 /*!< I2C Transmit                                */

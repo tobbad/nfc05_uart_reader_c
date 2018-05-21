@@ -36,7 +36,7 @@
 * INCLUDES
 ******************************************************************************
 */
-#include "kovio.h"
+
 #include "kovio.h"
 #include "utils.h"
 #include "rfal_rf.h"

@@ -68,21 +68,27 @@ Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c \
 Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c \
 Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c \
 Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart_ex.c \
-Src/demo.c \
-Src/logger.c \
-Src/main.c \
-Src/spi.c \
-Src/stm32l4xx_hal_msp.c \
+Src/kovio.c \
+Src/iso15693_3.c \
+Src/iso14443b_st25tb.c \
+Src/iso14443b.c \
+Src/iso14443a.c \
+Src/iso14443_common.c \
+Src/felica.c \
+Src/dispatcher.c \
+Src/mifare_ul.c \
+Src/nfc.c \
+Src/topaz.c \
 Src/stm32l4xx_it.c \
-Src/usart.c \
+Src/stm32l4xx_hal_msp.c \
+Src/uart_stream_driver.c \
+Src/main.c \
 /Src/system_stm32l4xx.c
 
 BSP_SRC=\
 Drivers/BSP/Components/ST25R3911/st25r3911.c \
 Drivers/BSP/Components/ST25R3911/st25r3911_com.c \
-Drivers/BSP/Components/ST25R3911/st25r3911_interrupt.c \
-Drivers/BSP/Components/ST25R3911/timer.c \
-Drivers/BSP/X-NUCLEO-NFC05A1/led.c 
+Drivers/BSP/Components/ST25R3911/st25r3911_interrupt.c 
 
 C_SOURCES += ${BSP_SRC}
 
@@ -101,6 +107,18 @@ Middlewares/rfal/Src/rfal_st25tb.c \
 Middlewares/rfal/Src/rfal_t1t.c 
 
 C_SOURCES += ${MID_SRC}
+
+LIB_SRC = \
+lib/STM32/Src/bootloader.c \
+lib/STM32/Src/delay.c \
+lib/STM32/Src/i2c.c \
+lib/STM32/Src/logger.c \
+lib/STM32/Src/spi.c \
+lib/STM32/Src/timer.c \
+lib/STM32/Src/uart_driver.c \
+lib/utils/Src/stream_dispatcher.c 
+
+C_SOURCES += ${LIB_SRC}
 
 # ASM sources
 ASM_SOURCES =  \
@@ -162,7 +180,9 @@ C_INCLUDES =  \
 -IDrivers/CMSIS/Device/ST/STM32L4xx/Include \
 -IDrivers/CMSIS/Include \
 -IMiddlewares/rfal/Inc \
--IDrivers/BSP/Components/ST25R3911
+-IDrivers/BSP/Components/ST25R3911 \
+-Ilib/STM32/Inc \
+-Ilib/utils/Inc
 
 
 # compile gcc flags

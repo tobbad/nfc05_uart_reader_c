@@ -43,7 +43,7 @@
 #include <stdint.h>
 #include "dispatcher.h"
 #include "st_stream.h"
-#include "st25R3911.h"
+#include "st25r3911.h"
 #include "st25r3911_com.h"
 #include "st25r3911_interrupt.h"
 #include "iso14443a.h"
@@ -51,7 +51,6 @@
 #include "iso14443_common.h"
 #include "iso14443b.h"
 #include "iso14443b_st25tb.h"
-#include "led.h"
 #include "logger.h"
 #include "st_errno.h"
 #include "nfc.h"
@@ -646,11 +645,11 @@ static uint8_t processCmd ( const uint8_t * rxData, uint16_t rxSize, uint8_t * t
     if (41 != first_command_received)
     {
       platformLedOff(PLATFORM_LED_FIELD_PORT, PLATFORM_LED_FIELD_PIN);
-      ledOff(LED_A);
-      ledOff(LED_B);
-      ledOff(LED_F);
-      ledOff(LED_V);
-      ledOff(LED_AP2P);
+      platformLedOff(LED_A_GPIO_Port, LED_A_Pin);
+      platformLedOff(LED_B_GPIO_Port, LED_B_Pin);
+      platformLedOff(LED_F_GPIO_Port, LED_F_Pin);
+      platformLedOff(LED_V_GPIO_Port, LED_V_Pin);
+      platformLedOff(LED_AP2P_GPIO_Port, LED_AP2P_Pin);
       first_command_received = 41;
     }
 
@@ -728,22 +727,22 @@ static uint8_t processCmd ( const uint8_t * rxData, uint16_t rxSize, uint8_t * t
       for(uint8_t i = 0; i < 6; i++)
       {
           if(i == 0) platformLedOn(PLATFORM_LED_FIELD_PORT, PLATFORM_LED_FIELD_PIN); else platformLedOff(PLATFORM_LED_FIELD_PORT, PLATFORM_LED_FIELD_PIN);
-          (i == 1) ? ledOn(LED_A) : ledOff(LED_A);
-          (i == 2) ? ledOn(LED_B) : ledOff(LED_B);
-          (i == 3) ? ledOn(LED_F) : ledOff(LED_F);
-          (i == 4) ? ledOn(LED_V) : ledOff(LED_V);
-          (i == 5) ? ledOn(LED_AP2P) : ledOff(LED_AP2P);
+          (i == 1) ? platformLedOn(LED_A_GPIO_Port, LED_A_Pin) : platformLedOff(LED_A_GPIO_Port, LED_A_Pin);
+          (i == 2) ? platformLedOn(LED_B_GPIO_Port, LED_B_Pin) : platformLedOff(LED_B_GPIO_Port, LED_B_Pin);
+          (i == 3) ? platformLedOn(LED_F_GPIO_Port, LED_F_Pin) : platformLedOff(LED_F_GPIO_Port, LED_F_Pin);
+          (i == 4) ? platformLedOn(LED_V_GPIO_Port, LED_V_Pin) : platformLedOff(LED_V_GPIO_Port, LED_V_Pin);
+          (i == 5) ? platformLedOn(LED_AP2P_GPIO_Port, LED_AP2P_Pin) : platformLedOff(LED_AP2P_GPIO_Port, LED_AP2P_Pin);
           HAL_Delay(70);
       }
       /* Direction: << */
       for(uint8_t i = 0; i < 6; i++)
       {
           if(i == 5) platformLedOn(PLATFORM_LED_FIELD_PORT, PLATFORM_LED_FIELD_PIN); else platformLedOff(PLATFORM_LED_FIELD_PORT, PLATFORM_LED_FIELD_PIN);
-          (i == 4) ? ledOn(LED_A) : ledOff(LED_A);
-          (i == 3) ? ledOn(LED_B) : ledOff(LED_B);
-          (i == 2) ? ledOn(LED_F) : ledOff(LED_F);
-          (i == 1) ? ledOn(LED_V) : ledOff(LED_V);
-          (i == 0) ? ledOn(LED_AP2P) : ledOff(LED_AP2P);
+          (i == 4) ? platformLedOn(LED_A_GPIO_Port, LED_A_Pin) : platformLedOff(LED_A_GPIO_Port, LED_A_Pin);
+          (i == 3) ? platformLedOn(LED_B_GPIO_Port, LED_B_Pin) : platformLedOff(LED_B_GPIO_Port, LED_B_Pin);
+          (i == 2) ? platformLedOn(LED_F_GPIO_Port, LED_F_Pin) : platformLedOff(LED_F_GPIO_Port, LED_F_Pin);
+          (i == 1) ? platformLedOn(LED_V_GPIO_Port, LED_V_Pin) : platformLedOff(LED_V_GPIO_Port, LED_V_Pin);
+          (i == 0) ? platformLedOn(LED_AP2P_GPIO_Port, LED_AP2P_Pin) : platformLedOff(LED_AP2P_GPIO_Port, LED_AP2P_Pin);
           HAL_Delay(70);
       }
       platformLedOff(PLATFORM_LED_FIELD_PORT, PLATFORM_LED_FIELD_PIN);
@@ -1447,7 +1446,7 @@ static ReturnCode processIso14443a(const uint8_t *rxData, uint16_t rxSize, uint8
     }
 
     if (ERR_NONE == err){
-      ledOnOff(LED_A, VISUAL_FEEDBACK_DELAY);
+      platformLedOnOff(LED_A_GPIO_Port, LED_A_Pin, VISUAL_FEEDBACK_DELAY);
     }
 
     return err;
@@ -1700,7 +1699,7 @@ static ReturnCode processIso14443b(const uint8_t *rxData, uint16_t rxSize, uint8
     }
 
     if (ERR_NONE == err){
-      ledOnOff(LED_B, VISUAL_FEEDBACK_DELAY);
+      platformLedOnOff(LED_B_GPIO_Port, LED_B_Pin, VISUAL_FEEDBACK_DELAY);
     }
 
     return err;
@@ -1858,7 +1857,7 @@ static ReturnCode processNfc(const uint8_t *rxData, uint16_t rxSize, uint8_t *tx
     }
 
     if (ERR_NONE == err){
-      ledOnOff(LED_AP2P, VISUAL_FEEDBACK_DELAY);
+      platformLedOnOff(LED_AP2P_GPIO_Port, LED_AP2P_Pin, VISUAL_FEEDBACK_DELAY);
     }
 
     return err;
@@ -2235,7 +2234,7 @@ static ReturnCode processIso15693(const uint8_t *rxData, uint16_t rxSize, uint8_
     }
 
     if (ERR_NONE == err){
-      ledOnOff(LED_V, VISUAL_FEEDBACK_DELAY);
+      platformLedOnOff(LED_V_GPIO_Port, LED_V_Pin, VISUAL_FEEDBACK_DELAY);
     }
 
     return err;
@@ -2525,7 +2524,7 @@ static ReturnCode processMifare(const uint8_t *rxData, uint16_t rxSize, uint8_t 
     }
 
     if (ERR_NONE == err){
-      ledOnOff(LED_A, VISUAL_FEEDBACK_DELAY);
+      platformLedOnOff(LED_A_GPIO_Port, LED_A_Pin, VISUAL_FEEDBACK_DELAY);
     }
 
     return err;
@@ -2621,7 +2620,7 @@ static ReturnCode processFeliCa(const uint8_t *rxData, uint16_t rxSize, uint8_t 
                     num_cards, num_cols);
 
             if ((*num_cards > 0)&&(ERR_NONE == err)){
-              ledOnOff(LED_F, VISUAL_FEEDBACK_DELAY);
+              platformLedOnOff(LED_F_GPIO_Port, LED_F_Pin, VISUAL_FEEDBACK_DELAY);
               logUsart("Felica/NFC-F card(s) found. Cnt: %d UID: ", *num_cards);
               for(i = 0; i < *num_cards; i++)
               {
@@ -2640,7 +2639,7 @@ static ReturnCode processFeliCa(const uint8_t *rxData, uint16_t rxSize, uint8_t 
             *txSize = numBytesReceived;
 
             if (ERR_NONE == err){
-              ledOnOff(LED_F, VISUAL_FEEDBACK_DELAY);
+              platformLedOnOff(LED_F_GPIO_Port, LED_F_Pin, VISUAL_FEEDBACK_DELAY);
             }
             break;
 

@@ -19,63 +19,72 @@
   *
 ******************************************************************************/
 /*
- *      PROJECT:   ST25R3911 firmware
+ *      PROJECT:   ST25R391x firmware
  *      $Revision: $
  *      LANGUAGE:  ANSI C
  */
 
-/*! \file
+/*! \file delay.c
+ *
+ *  \brief SW Delay implementation
  *
  *  \author
  *
- *  \brief Module for controlling shield LEDs
+ *   This module makes use of a System Tick in millisconds and provides
+ *   an abstraction for SW delay
  *
  */
-/*!
- *
- */
-
-/* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef LED_H
-#define LED_H
-
-/* Includes ------------------------------------------------------------------*/
-#include "stdint.h"
 
 /*
 ******************************************************************************
-* GLOBAL DEFINES
+* INCLUDES
 ******************************************************************************
 */
-extern volatile uint16_t msLedA;
-extern volatile uint16_t msLedB;
-extern volatile uint16_t msLedF;
-extern volatile uint16_t msLedV;
-extern volatile uint16_t msLedAP2P;
+#include "delay.h"
 
 
-typedef enum
+/*
+******************************************************************************
+* LOCAL DEFINES
+******************************************************************************
+*/
+//uint32_t getUs(void);
+
+/*
+******************************************************************************
+* LOCAL VARIABLES
+******************************************************************************
+*/
+
+/*
+******************************************************************************
+* GLOBAL FUNCTIONS
+******************************************************************************
+*/
+
+/*******************************************************************************/
+void delayUs(uint32_t micros)
 {
-    LED_A       = 0x1,
-    LED_B       = 0x2,
-    LED_F       = 0x3,
-    LED_V       = 0x4,
-    LED_AP2P    = 0x5,
-}st25R3911Led_t;
+  uint32_t start = getUs();
+  while (getUs() - start < micros) {
+      __nop();
+  }
+}
 
 /*
 ******************************************************************************
-* GLOBAL MACROS
+* LOCAL FUNCTIONS
 ******************************************************************************
 */
+uint32_t getUs(void) {
+  uint32_t usTicks = HAL_RCC_GetSysClockFreq() / 1000000;
+  register uint32_t ms, cycle_cnt;
+  do {
+    ms = HAL_GetTick();
+    cycle_cnt = SysTick->VAL;
+  } while (ms != HAL_GetTick());
 
-void ledOn(st25R3911Led_t Led);
-void ledOff(st25R3911Led_t Led);
-void ledToggle(st25R3911Led_t Led);
+  return (ms * 1000) + (usTicks * 1000 - cycle_cnt) / usTicks;
+}
 
-#define VISUAL_FEEDBACK_DELAY   600
-void ledOnOff(st25R3911Led_t Led, uint32_t delay);
-void ledFeedbackHandler(void);
-
-#endif /* LED_H */
 
