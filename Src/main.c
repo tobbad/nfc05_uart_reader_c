@@ -122,15 +122,15 @@ int main(void)
   MX_SPI1_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-
   /* SPI Connection to ST25R3911 */
   spiInit(&hspi1);
-  uartSetHandler(LOGGER_UART, &huart1);
   uartSetHandler(CTRL_UART, &huart2);
+  uartReset(CTRL_UART);
   /* Initialize log module */
   logUsartInit(&huart1);
 
   platformLog("Welcome to DISCO-STM32L4x6\r\n");
+  SET_BIT(huart2.Instance->CR1, USART_CR1_IDLEIE); //Enable idle irq
 
   /* Initalize RFAL */
   rfalAnalogConfigInitialize();

@@ -53,8 +53,8 @@ static uint8_t lastError; /* flag indicating different types of errors that cann
 
 static uint8_t handleFirmwareInformation ( uint16_t * toTx, uint8_t * txData )
 {
-  uint16_t size = strlen( applFirmwareInformation( ) );
-  if ( size >= *toTx - 1 ) {
+  int32_t size = strlen( applFirmwareInformation( ) );
+  if ( size+1 >= *toTx ) {
     size = *toTx - 1;
   }
   if ( size >= ST_STREAM_SHORT_STRING - 1 ) {

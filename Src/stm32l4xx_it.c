@@ -37,6 +37,7 @@
 
 /* USER CODE BEGIN 0 */
 #include "st25r3911_interrupt.h"
+#include "uart_driver.h"
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
@@ -153,7 +154,7 @@ void USART1_IRQHandler(void)
   /* USER CODE END USART1_IRQn 0 */
   HAL_UART_IRQHandler(&huart1);
   /* USER CODE BEGIN USART1_IRQn 1 */
-
+  uartHandleInterrupt(LOGGER_UART);
   /* USER CODE END USART1_IRQn 1 */
 }
 
@@ -167,7 +168,7 @@ void USART2_IRQHandler(void)
   /* USER CODE END USART2_IRQn 0 */
   HAL_UART_IRQHandler(&huart2);
   /* USER CODE BEGIN USART2_IRQn 1 */
-
+  uartHandleInterrupt(CTRL_UART);
   /* USER CODE END USART2_IRQn 1 */
 }
 

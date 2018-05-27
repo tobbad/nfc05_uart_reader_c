@@ -108,9 +108,10 @@ static uint32_t calculateAvailableBytesToReceive( uint32_t current, uint32_t las
 */
 void uartHandleInterrupt( uint8_t id )
 {
-    if (id >= UART_MAX_NUMBER_OF_UARTS)
+    if ( (id >= UART_MAX_NUMBER_OF_UARTS) && (uartInfo[id].hUART != NULL) )
     {
-        /* Can't even read from an UART because it could be the wrong one */
+        /* Can't even read from an UART because it could be the wrong one
+           or it is not setup */
         return;
     }
 
@@ -119,7 +120,11 @@ void uartHandleInterrupt( uint8_t id )
     {
         uartInfo[id].lastError = ERR_INSERT_UART_GRP(ERR_HW_OVERRUN);
     }
-
+    /* Do we hae a RX idle state? */
+    if (__HAL_UART_GET_FLAG(uartInfo[id].hUART, UART_FLAG_IDLE) != RESET) {
+        __HAL_UART_CLEAR_IDLEFLAG(uartInfo[id].hUART);
+        platformLog("Buffer at %d\r\n", uartInfo[id].hUART->hdmarx->Instance->CNDTR);
+    }
 
     /*
      * Due to the use of a transmit buffer obscured to the uart (the
@@ -249,7 +254,7 @@ uint32_t uartTxNBytes( uint8_t id, const uint8_t * buffer, uint32_t size )
         return 0;
     }
 
-    if( id == UART0 )
+    if( id == CTRL_UART )
     {
         if( uartMaxTxBytes(id) > size )
         {

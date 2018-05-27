@@ -22,7 +22,7 @@ TARGET = nfc05_reader_nucleo_l476
 # debug build?
 DEBUG = 1
 # optimization
-OPT = -Og
+OPT = -O0
 
 
 #######################################
